@@ -1,0 +1,3 @@
+prefix=/home/ccruz/.local/share/npm
+cache=/home/ccruz/.local/share/npm/cache
+init-module=.local/share/npm/npm-init.js

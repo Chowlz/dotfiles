@@ -1,0 +1,3 @@
+EXCLUDES="README.md setup.sh"
+TAGS="base"
+SYMLINK_DIRS="doom.d"
