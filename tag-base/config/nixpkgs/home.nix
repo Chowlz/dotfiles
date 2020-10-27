@@ -32,5 +32,6 @@ in
 
   imports = [
     ./programs/fish/fish.nix
+    ./programs/nodejs/npm.nix
   ];
 }
