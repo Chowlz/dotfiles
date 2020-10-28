@@ -33,6 +33,7 @@ in
   imports = [
     ./programs/fish/fish.nix
     ./programs/nodejs/npm.nix
+    ./programs/tmux/tmux.nix
     ./programs/vim/vim.nix
   ];
 }
