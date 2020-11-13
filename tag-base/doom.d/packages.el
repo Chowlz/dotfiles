@@ -49,5 +49,6 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! adoc-mode)
 (package! case-conversion
   :recipe (:local-repo "packages/case-conversion"))

@@ -30,7 +30,10 @@
 (add-to-list 'interpreter-mode-alist '("node" . js2-mode))
 (add-to-list 'interpreter-mode-alist '("ts-node" . typescript-mode))
 (add-to-list 'interpreter-mode-alist '("bb" . clojure-mode))
+
+;; Set modes on file extension
 (add-to-list 'auto-mode-alist '("\\.bb\\'" . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.asciidoc\\'" . adoc-mode))
 
 ;; Switch to the new window after splitting
 (setq evil-split-window-below t
