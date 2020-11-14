@@ -1,11 +1,15 @@
-;;; overides/git.el -*- lexical-binding: t; -*-
+;;; overides/git-overides.el -*- lexical-binding: t; -*-
 
+;; Init copied and modified to use 'z' instead of 'Z' for stashing in the git status transient menu.
+;; In doom-emacs, 'z' is used for folding, but this is disabled in spacemacs.
 (use-package-hook! evil-magit
   :pre-init
   (setq evil-magit-state 'normal
         evil-magit-use-z-for-folds nil)
   nil)
 
+;; Config copied and modified for the same reason, but removes the evil-define-key* section in the
+;; magit-mode-map involved with 'z'.
 (use-package-hook! evil-magit
   :pre-config
   (undefine-key! magit-mode-map

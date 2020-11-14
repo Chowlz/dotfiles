@@ -22,3 +22,14 @@
   (interactive)
   (setenv "COLORTERM" "truecolor")
   (restart-emacs))
+
+;; Keybindings
+(undefine-key! doom-leader-map
+  "q r")
+
+(map!
+ (:leader
+  (:prefix ("q" . "quit/session")
+   (:prefix ("r" . "restart")
+    :desc "Restart with TERM=xterm-24bits"          :n   "r"       #'++restart-emacs/restart-session-24-bit-color
+    :desc "Restart with TERM unset"                 :n   "u"       #'++restart-emacs/restart-session-base-color))))

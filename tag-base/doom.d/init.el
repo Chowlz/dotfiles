@@ -17,7 +17,7 @@
 ;; Reference:
 ;; https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#configuring-packages
 ;; Init package-overrides
-(load! "overrides/+git")
+(load! "config/+git-overrides")
 
 (doom! :input
        ;;chinese

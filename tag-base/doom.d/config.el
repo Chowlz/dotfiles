@@ -26,22 +26,6 @@
 ;; Prevents some cases of Emacs flickering
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
-;; Set modes for shebang
-(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
-(add-to-list 'interpreter-mode-alist '("ts-node" . typescript-mode))
-(add-to-list 'interpreter-mode-alist '("bb" . clojure-mode))
-
-;; Set modes on file extension
-(add-to-list 'auto-mode-alist '("\\.bb\\'" . clojure-mode))
-(add-to-list 'auto-mode-alist '("\\.asciidoc\\'" . adoc-mode))
-
-;; Switch to the new window after splitting
-(setq evil-split-window-below t
-      evil-vsplit-window-right t)
-
-;; Allow going past one extra character
-(setq evil-move-beyond-eol t)
-
 ;; Org-mode default directory
 (setq org-directory "~/notes/")
 
@@ -49,15 +33,16 @@
   ;; Slow it down so I can press enter rather than selecting a suggestion
   (setq company-idle-delay 0.5))
 
-(after! doom-modeline
-  ;; Shorten filename
-  (setq doom-modeline-buffer-file-name-style 'truncate-upto-root))
-
-(load! "config/+typescript")
+(load! "config/+asciidoc")
+(load! "config/+case-conversion")
 (load! "config/+clojure")
-(load! "config/+git")
+(load! "config/+code")
+(load! "config/+evil")
+(load! "config/+fish")
 (load! "config/+flycheck")
+(load! "config/+git")
 (load! "config/+helm")
 (load! "config/+lisp")
+(load! "config/+modeline")
 (load! "config/+restart-emacs")
-(load! "+keybindings")
+(load! "config/+typescript")

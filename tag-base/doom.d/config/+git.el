@@ -20,3 +20,22 @@
 (defun ++git/magit-status-quit (&optional kill-buffer)
   (interactive "P")
   (funcall magit-bury-buffer-function kill-buffer))
+
+;; Keybindings
+(undefine-key! doom-leader-map
+  ;; magit status -> remapped to "SPC g s"
+  "g g"
+  ;; magit stage hunk -> reused for magit-status
+  "g s")
+
+(after! magit
+  ;; Fix quitting magit-status
+  (define-key magit-status-mode-map [remap magit-mode-bury-buffer] #'++git/magit-status-quit)
+  (map! :map magit-status-mode-map "<escape>"  #'++git/magit-status-quit))
+
+(map!
+ (:leader
+  (:prefix ("g" . "git")
+   :desc "Magit status"                           :n   "s"       #'magit-status
+   :desc "Magit blame"                            :n   "b"       #'magit-blame
+   :desc "Magit switch branch"                    :n   "B"       #'magit-blame)))
