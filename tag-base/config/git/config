@@ -12,11 +12,14 @@ autocrlf = input
 editor = vim
 [push]
 default = upstream
+[pull]
+rebase = true
 [alias]
 pl = pull
 plr = pull --rebase
 ph = push
 co = checkout
+cob = checkout -b
 com = checkout master
 ci = commit -v
 st = status
@@ -25,6 +28,8 @@ br = branch
 rb = rebase
 rbi = rebase -i
 rbu = rebase @{upstream}
+undo-commit = !sh -c 'git reset --soft HEAD~"${1:-1}"'
+kill-commit = !sh -c 'git reset --hard HEAD~"${1:-1}"'
 unstage = reset HEAD --
 cdiff = diff --color-words
 diffc = diff --cached
