@@ -19,6 +19,16 @@ in
         };
       }
       {
+        # 10/28/2020
+        name = "bass";
+        src = pkgs.fetchFromGitHub {
+          owner = "edc";
+          repo = "bass";
+          rev = "d63054b24c2f63aaa3a08fb9ec9d0da4c70ab922";
+          sha256 = "0pwci5xxm8308nrb52s5nyxijk0svar8nqrdfvkk2y34z1cg319b";
+        };
+      }
+      {
         # 08/23/2020
         name = "z";
         src = pkgs.fetchFromGitHub {
@@ -30,15 +40,15 @@ in
       }
     ];
     functions = {
-      # npm = ''
-      #   switch $argv[1]
-      #     case packages
-      #       command npm list --depth 0 $argv[2..-1]
-      #     case *
-      #       command npm $argv
-      #   end
-      # '';
-      bb = "if test -z $argv; command rlwrap bb; else; command bb $argv; end";
+      npm = ''
+        switch $argv[1]
+          case packages
+            command npm list --depth 0 $argv[2..-1]
+          case '*'
+            command npm $argv
+        end
+      '';
+      bb = "if test -z \"$argv\"; command rlwrap bb; else; command bb $argv; end";
       paths = "for path in $PATH; echo $path; end";
     };
     shellAliases = {
@@ -50,7 +60,7 @@ in
       # env-vars = "env | bat -pl ini";
       g = "git";
       # grep = "batgrep"; # https://github.com/eth-p/bat-extras/issues/42
-      grep = "rg";
+      # grep = "rg";
       ll = "TZ=UTC exa -aghl";
       ls = "TZ=UTC exa";
       lt = "TZ=UTC exa --long --tree";
