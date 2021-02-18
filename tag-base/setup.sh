@@ -32,3 +32,8 @@ if [[ -L ~/.emacs.d && -d ~/.emacs.d ]]; then
 else
   setup-emacs
 fi
+
+# Nodejs deps
+# setup-npm () {
+#   npm install -g clj-kondo es-lint shadow-cljs source-map-support tslint typescript ws
+# }
