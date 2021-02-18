@@ -107,7 +107,7 @@
    :desc "Start of sexp"                          :nv  "^"       #'sp-beginning-of-sexp
    :desc "Insert sexp before"                     :nv  "("       #'++lisp/lisp-insert-sexp-before
    :desc "Insert sexp after"                      :nv  ")"       #'++lisp/lisp-insert-sexp-after
-   :desc "Cleanup sexp"                           :nv  "'"       #'++lisp/lisp-cleanup-sexp
+   :desc "Cleanup sexp"                           :nv  ";"       #'++lisp/lisp-cleanup-sexp
    :desc "Absorb sexp"                            :nv  "a"       #'sp-absorb-sexp
    :desc "Barf sexp"                              :nv  "b"       #'sp-forward-barf-sexp
    :desc "Backward barf sexp"                     :nv  "B"       #'sp-backward-barf-sexp

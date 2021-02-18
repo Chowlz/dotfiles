@@ -1,6 +1,7 @@
 ;;; modules/+helm.el -*- lexical-binding: t; -*-
 
 (after! helm
+  (setq helm-buffer-max-length 100)
   (setq helm-ff-lynx-style-map t))
 
 ;;;###autoload

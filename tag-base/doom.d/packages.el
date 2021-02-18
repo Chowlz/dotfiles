@@ -50,5 +50,6 @@
 ;(unpin! t)
 
 (package! adoc-mode)
+(package! jsonnet-mode)
 (package! case-conversion
   :recipe (:local-repo "packages/case-conversion"))
