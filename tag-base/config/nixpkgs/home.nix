@@ -2,13 +2,12 @@
 
 let
   unstable = import <nixpkgs-unstable> {};
-  exa = pkgs.callPackage ./pkgs/exa/exa.nix {};
 in {
   home.username = "ccruz";
   home.homeDirectory = "/home/ccruz";
-    exa
   home.stateVersion = "21.03";
   home.packages = [
+    pkgs.exa
     unstable.awscli
     unstable.bat
     unstable.bat-extras.batman
@@ -16,6 +15,7 @@ in {
     unstable.bat-extras.batgrep
     unstable.bat-extras.batwatch
     unstable.clojure
+    unstable.clj-kondo
     unstable.bpytop
     unstable.emacs
     unstable.neofetch
@@ -24,6 +24,10 @@ in {
     unstable.rcm
     unstable.rlwrap
     unstable.shellcheck
+  ];
+
+  nixpkgs.overlays = [
+    (import ./overlays/exa/exa.nix)
   ];
 
   programs.home-manager.enable = true;
