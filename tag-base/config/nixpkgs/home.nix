@@ -3,14 +3,12 @@
 let
   unstable = import <nixpkgs-unstable> {};
   exa = pkgs.callPackage ./pkgs/exa/exa.nix {};
-in
-{
+in {
   home.username = "ccruz";
   home.homeDirectory = "/home/ccruz";
-  home.stateVersion = "20.09";
-  home.packages =
-  [
     exa
+  home.stateVersion = "21.03";
+  home.packages = [
     unstable.awscli
     unstable.bat
     unstable.bat-extras.batman
