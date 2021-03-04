@@ -13,8 +13,8 @@ in {
     unstable.bat-extras.batdiff
     unstable.bat-extras.batgrep
     unstable.bat-extras.batwatch
-    unstable.clojure
     unstable.clj-kondo
+    unstable.clojure
     unstable.exa
     unstable.bpytop
     unstable.emacs
