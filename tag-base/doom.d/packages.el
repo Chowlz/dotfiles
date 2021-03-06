@@ -51,5 +51,6 @@
 
 (package! adoc-mode)
 (package! jsonnet-mode)
+(package! vimrc-mode)
 (package! case-conversion
   :recipe (:local-repo "packages/case-conversion"))
