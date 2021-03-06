@@ -52,15 +52,11 @@ in
       paths = "for path in $PATH; echo $path; end";
     };
     shellAliases = {
-      ".." = "cd ..";
       cat = "bat -p";
       diff = "batdiff";
       doom = "~/.emacs.d/bin/doom";
       emacs = "TERM=xterm-24bits command emacs -nw";
-      # env-vars = "env | bat -pl ini";
       g = "git";
-      # grep = "batgrep"; # https://github.com/eth-p/bat-extras/issues/42
-      # grep = "rg";
       ll = "TZ=UTC exa -aghl";
       ls = "TZ=UTC exa";
       lt = "TZ=UTC exa --long --tree";
