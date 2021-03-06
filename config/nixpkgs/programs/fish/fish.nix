@@ -40,6 +40,9 @@ in
       }
     ];
     functions = {
+      bb = "if test -z \"$argv\"; command rlwrap bb; else; command bb $argv; end";
+      env-vars = "printenv | sort | bat --pager cat -pl ini";
+      paths = "for path in $PATH; echo $path; end";
       npm = ''
         switch $argv[1]
           case packages
@@ -48,8 +51,6 @@ in
             command npm $argv
         end
       '';
-      bb = "if test -z \"$argv\"; command rlwrap bb; else; command bb $argv; end";
-      paths = "for path in $PATH; echo $path; end";
     };
     shellAliases = {
       cat = "bat -p";
@@ -57,7 +58,7 @@ in
       doom = "~/.emacs.d/bin/doom";
       emacs = "TERM=xterm-24bits command emacs -nw";
       g = "git";
-      ll = "TZ=UTC exa -aghl";
+      ll = "TZ=UTC exa -aghl --group-directories-first";
       ls = "TZ=UTC exa";
       lt = "TZ=UTC exa --long --tree";
       man = "batman";

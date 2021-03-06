@@ -35,7 +35,7 @@ alias doom="~/.emacs.d/bin/doom"
 alias emacs="TERM=xterm-24bits $(which emacs) -nw"
 alias g="git"
 alias grep="grep --color=always"
-alias ll="TZ=UTC exa -aghl"
+alias ll="TZ=UTC exa -aghl --group-directories-first"
 alias ls="TZ=UTC exa"
 alias lt="TZ=UTC exa --long --tree"
 alias man="batman"
@@ -46,11 +46,14 @@ alias untar="tar -xzf"
 alias vim="nvim"
 alias watch="batwatch"
 
-npm () {
-  case $1 in
-    packages) shift; command npm list --depth 0 "$@" ;;
-    *)        command npm "$@" ;;
-  esac
+add-to-path () {
+  while [ -n "$1" ]; do
+    case ":$PATH:" in
+      *":$1:"*) :;;
+      *) PATH="$1:$PATH";;
+    esac
+    shift
+  done
 }
 
 bb () {
@@ -61,8 +64,8 @@ bb () {
   fi
 }
 
-paths () {
-  echo $PATH | sed -e s/\\:/\\\n/g
+env-vars () {
+  printenv | sort | bat --pager cat -pl ini
 }
 
 hash-check () {
@@ -87,14 +90,26 @@ hash-check () {
   fi
 }
 
-add-to-path () {
-  while [ -n "$1" ]; do
-    case ":$PATH:" in
-      *":$1:"*) :;;
-      *) PATH="$1:$PATH";;
-    esac
-    shift
-  done
+npm () {
+  case $1 in
+    packages) shift; command npm list --depth 0 "$@" ;;
+    *)        command npm "$@" ;;
+  esac
+}
+
+nx () {
+  local cmd=$1
+  case $cmd in
+    install)   shift; command nix-env -iA "$@" ;;
+    uninstall) shift; command nix-env --uninstall "$@" ;;
+    search)    shift; command nix-env -qa --json "$@" ;;
+    list)      shift; command nix-env --query ;;
+    *)         command nix-env "$@" ;;
+  esac
+}
+
+paths () {
+  echo $PATH | sed -e s/\\:/\\\n/g
 }
 
 ################################################################################
@@ -137,17 +152,6 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
   source $HOME/.nix-profile/etc/profile.d/nix.sh
 fi
 export NIX_PAGER=cat
-
-nx () {
-  local cmd=$1
-  case $cmd in
-    install)   shift; command nix-env -iA "$@" ;;
-    uninstall) shift; command nix-env --uninstall "$@" ;;
-    search)    shift; command nix-env -qa --json "$@" ;;
-    list)      shift; command nix-env --query ;;
-    *)         command nix-env "$@" ;;
-  esac
-}
 
 ################################################################################
 # External config (includes files in the format `.zshrc-*`, but excludes those
