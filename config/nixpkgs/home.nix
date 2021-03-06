@@ -24,22 +24,27 @@ in {
     unstable.nodejs
     unstable.pastel
     unstable.python39
+    unstable.python39Packages.pip
     unstable.rcm
     unstable.ripgrep
     unstable.rlwrap
+    unstable.shellcheck
   ] ++ lib.optionals stdenv.isDarwin [
     unstable.coreutils
     unstable.curl
     unstable.diffutils
     unstable.findutils
     unstable.gawk
+    unstable.git
     unstable.gnugrep
     unstable.gnused
     unstable.gnutar
     unstable.gzip
+    unstable.ispell
     unstable.keychain
     unstable.lzma
     unstable.mosh
+    unstable.openssh
     unstable.tmux
     unstable.wget
     unstable.which
@@ -48,7 +53,6 @@ in {
   ] ++ lib.optionals stdenv.isLinux [
     unstable.bpytop
     unstable.emacs
-    unstable.shellcheck
   ];
 
   programs.home-manager.enable = true;
