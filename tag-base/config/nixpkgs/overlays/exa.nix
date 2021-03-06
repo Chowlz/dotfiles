@@ -10,7 +10,7 @@ self: super: {
     patches = [ ];
     nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ self.just self.pandoc ];
 
-    postPatch = ''
+    postPatch = super.lib.optionalString (! super.stdenv.isDarwin) ''
       substituteInPlace src/output/table.rs \
       --replace "/usr/share/zoneinfo" "/etc/zoneinfo"
     '';
