@@ -33,5 +33,6 @@ in {
     ./programs/nodejs/npm.nix
     ./programs/tmux/tmux.nix
     ./programs/vim/vim.nix
+    ./programs/zsh/zsh.nix
   ];
 }
