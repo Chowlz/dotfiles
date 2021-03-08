@@ -26,7 +26,7 @@ self: super: {
 
     cargoDeps = old.cargoDeps.overrideAttrs (super.lib.const {
       inherit src;
-      outputHash = "16hivdxphyddrh6j3hs9nvf91dhrjwlr68xs9z36n3b88wadxjcx";
+      outputHash = "1lmjh0grpnx20y6raxnxgjkr92h395r6jk8mm2ypc4cxpxczdqvl";
     });
   });
 }
