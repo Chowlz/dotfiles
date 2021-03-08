@@ -7,9 +7,6 @@ cd $HOME
 # Nix
 nix-channel --update
 
-# 24-bit color
-tic -x -o ~/.terminfo ~/.terminfo/src/terminfo-24bit.src
-
 # Doom-Emacs
 setup-emacs () {
   rm -fr ~/.emacs.d
