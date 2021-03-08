@@ -10,7 +10,7 @@ source ~/.nix-profile/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f ~/.config/zsh/p10k.zsh ]] || source ~/.config/zsh/p10k.zsh
 
 ################################################################################
 # General config
@@ -32,7 +32,6 @@ export NODE_REPL_HISTORY=$HOME/.cache/node_repl_history # nodejs history file
 alias cat="bat -p"
 alias diff="batdiff"
 alias doom="~/.emacs.d/bin/doom"
-alias emacs="TERM=xterm-24bits $(which emacs) -nw"
 alias g="git"
 alias grep="grep --color=always"
 alias ll="TZ=UTC exa -aghl --group-directories-first"
@@ -54,6 +53,7 @@ add-to-path () {
     esac
     shift
   done
+  export PATH
 }
 
 bb () {
@@ -62,6 +62,10 @@ bb () {
   else
     command bb "$@"
   fi
+}
+
+emacs () {
+ TERM=xterm-24bits command emacs -nw "$@"
 }
 
 env-vars () {
@@ -119,10 +123,7 @@ case "$(uname -s)" in
   Linux*)
     case "$(cat /etc/os-release | sed -En 's/^NAME="(.+)"$/\1/p')" in
       Ubuntu)
-        add-to-path \
-          $HOME/bin \
-          $HOME/.local/share/npm/bin
-        export PATH
+        add-to-path $HOME/bin $HOME/.local/share/npm/bin
         alias install="sudo apt install"
         alias remove="sudo apt remove"
         alias upgrade="sudo apt update && sudo apt -y upgrade"
@@ -133,15 +134,9 @@ case "$(uname -s)" in
     ;;
 
   Darwin*)
-    # homebrew
-    add-to-path \
-      /usr/local/bin \
-      /usr/local/sbin
-    export PATH
+    # Homebrew
+    add-to-path /usr/local/bin /usr/local/sbin
     alias brewski="brew update && brew upgrade"
-    alias py=python3
-    alias python=python3
-    alias pip=pip3
     ;;
 esac
 
