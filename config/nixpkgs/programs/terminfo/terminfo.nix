@@ -1,7 +1,11 @@
 { lib, pkgs, ... }:
 
 let
-  inherit (pkgs) runCommand ncurses;
+  inherit (pkgs) stdenv runCommand ncurses;
+
+  tic = if stdenv.isDarwin
+        then "/usr/bin/tic"
+        else "${lib.getBin ncurses}/bin/tic";
 
   src = ''
     # Use colon separators.
@@ -22,7 +26,7 @@ let
     ${src}
     EOF
     mkdir -p "$out/share/terminfo"
-    ${lib.getBin ncurses}/bin/tic -x -o "$out/share/terminfo" terminfo-xterm-24bit.src
+    ${tic} -x -o "$out/share/terminfo" terminfo-xterm-24bit.src
   '';
 in {
   home.file.".terminfo".source = "${terminfo-xterm-24bit}/share/terminfo";
