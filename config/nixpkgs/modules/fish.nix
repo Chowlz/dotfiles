@@ -331,15 +331,14 @@ in {
       xdg.configFile."fish/config.fish".text =
         let
           nix = babelfish "${pkgs.nix}/etc/profile.d/nix.sh" "nix";
+          nix-profile-path = "${config.home.homeDirectory}/.nix-profile/bin";
         in ''
           ################################################################################
           # config.fish
           ################################################################################
 
           # Setup nix env vars
-          if test -e ${nix}
-            source ${nix}
-          end
+          test -e ${nix}; and contains ${nix-profile-path} $PATH; and source ${nix}
           set -gx NIX_PAGE cat
 
         '' +
