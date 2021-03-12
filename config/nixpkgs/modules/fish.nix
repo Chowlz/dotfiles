@@ -152,7 +152,7 @@ let
   indentAttrsOfStrBlock = {break ? true, header ? null, prefix, func, attrs}:
     optionalString (attrs != {}) (indentStrList {
       inherit break header prefix;
-      list=(mapAttrsToList func attrs);
+      list = (mapAttrsToList func attrs);
     });
 
   ifStrBlock = {header ? null, cond, str}:
@@ -309,7 +309,7 @@ in {
         generateCompletions = package:
           pkgs.runCommand "${package.name}-fish-completions" {
             src = package;
-            nativeBuildInputs = [ pkgs.python2 ];
+            nativeBuildInputs = [ pkgs.python3 ];
             buildInputs = [ cfg.package ];
             preferLocalBuild = true;
             allowSubstitutes = false;
@@ -328,64 +328,82 @@ in {
           in map generateCompletions (sort cmp config.home.packages);
       };
 
-      xdg.configFile."fish/config.fish".text =
-        let
-          nix = babelfish "${pkgs.nix}/etc/profile.d/nix.sh" "nix";
-          nix-profile-path = "${config.home.homeDirectory}/.nix-profile/bin";
-        in ''
+      xdg.configFile."fish/config.fish".text = ''
           ################################################################################
           # config.fish
           ################################################################################
-
-          # Setup nix env vars
-          test -e ${nix}; and contains ${nix-profile-path} $PATH; and source ${nix}
-          set -gx NIX_PAGE cat
-
         '' +
         ifStrBlock {
-          header="Source home.sessionVariables only once";
-          cond="not set -q __HM_SESS_VARS_SOURCED";
-          str=
+          header = "Source home.sessionVariables only once";
+          cond ="not set -q __fish_home_manager_vars_sourced";
+          str =
             indentAttrsOfStrBlock {
               prefix="  ";
               func=(k: v: "set -gx ${k} ${escapeShellArg v}");
               attrs=config.home.sessionVariables;
             } +
-            optionalString (config.home.sessionVariables != {}) "  set -gx __HM_SESS_VARS_SOURCED 1\n";
+            optionalString (config.home.sessionVariables != {}) "  set -g __fish_home_manager_vars_sourced 1\n";
         } +
         ifStrBlock {
-          header="Login shell init";
-          cond="status --is-login";
-          str=indentStrBlock {
-            prefix="  ";
-            str=cfg.loginShellInit;
-          };
+          header = "General config";
+          cond = "not set -q __fish_general_config_sourced";
+          str =
+            indentStrBlock {
+              header = "Setup nix env vars";
+              prefix = "  ";
+              str =
+                let
+                  nix = babelfish "${pkgs.nix}/etc/profile.d/nix.sh" "nix";
+                  nix-channels-path = "${config.home.homeDirectory}/.nix-defexpr/channels";
+                  nix-root-channels-path = "/nix/var/nix/profiles/per-user/root/channels";
+                in ''
+                test -e ${nix-channels-path}
+                  and not contains -i ${nix-channels-path} $NIX_PATH &> /dev/null
+                  and source ${nix}
+                test ! -e ${nix-root-channels-path}
+                  and contains -i ${nix-root-channels-path} $NIX_PATH &> /dev/null
+                  and set -e NIX_PATH[(contains -i ${nix-root-channels-path} $NIX_PATH)]
+                  and set -gx NIX_PATH $NIX_PATH
+                set -gx NIX_PAGE cat
+              '';
+            } +
+            "  set -g __fish_general_config_sourced 1\n";
         } +
         ifStrBlock {
-          header="Interactive shell init";
-          cond="status --is-interactive";
-          str=
+          header = "Login shell init";
+          cond = "status --is-login; and not set -q __fish_login_shell_init_sourced";
+          str =
+            indentStrBlock {
+              prefix = "  ";
+              str = cfg.loginShellInit;
+            } +
+            optionalString (cfg.loginShellInit != "") "  set -g __fish_login_shell_init_sourced 1\n";
+        } +
+        ifStrBlock {
+          header = "Interactive shell init";
+          cond = "status --is-interactive; and not set -q __fish_interactive_shell_init_sourced";
+          str =
             indentAttrsOfStrBlock {
-              header="Abbreviations";
-              prefix="  ";
-              func=(k: v: "abbr --add --global -- ${k} ${escapeShellArg v}");
-              attrs=cfg.abbrs;
+              header = "Abbreviations";
+              prefix = "  ";
+              func = (k: v: "abbr --add --global -- ${k} ${escapeShellArg v}");
+              attrs = cfg.abbrs;
             } +
             indentAttrsOfStrBlock {
-              header="Aliases";
-              prefix="  ";
-              func=(k: v: "alias ${k} ${escapeShellArg v}");
-              attrs=cfg.aliases;
+              header = "Aliases";
+              prefix = "  ";
+              func = (k: v: "alias ${k} ${escapeShellArg v}");
+              attrs = cfg.aliases;
             } +
             indentStrBlock {
-              header="Init";
-              prefix="  ";
-              str=cfg.interactiveShellInit;
+              header = "Init";
+              prefix = "  ";
+              str = cfg.interactiveShellInit;
             } +
             indentStrBlock {
-              header="Add completions generated by Home Manager to $fish_complete_path";
-              prefix="  ";
-              str=''
+              header ="Add completions generated by Home Manager to $fish_complete_path";
+              prefix = "  ";
+              str = ''
                 begin
                   set -l joined (string join " " $fish_complete_path)
                   set -l prev_joined (string replace --regex "[^\s]*generated_completions.*" "" $joined)
@@ -395,7 +413,8 @@ in {
                   set fish_complete_path $prev "${config.xdg.dataHome}/fish/home-manager_generated_completions" $post
                 end
               '';
-            };
+            } +
+            "  set -g __fish_interactive_shell_init_sourced 1\n";
         };
     }
     {
@@ -427,6 +446,9 @@ in {
           '';
         };
       }) (cfg.functions // {
+        env-vars = ''
+          printenv | sort | bat --pager cat -pl ini
+        '';
         fish-mgr = ''
           argparse --stop-nonopt h/help -- $argv
           if set -q _flag_help
@@ -445,6 +467,12 @@ in {
               "  clear  clear plugin settings"
             return 1
           end
+        '';
+        nix-paths = ''
+          string split " " $NIX_PATH
+        '';
+        paths = ''
+          for path in $PATH; echo $path; end
         '';
       });
     }

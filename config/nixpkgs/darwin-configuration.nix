@@ -4,9 +4,6 @@
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix
   environment.darwinConfig = "$HOME/.config/nixpkgs/darwin-configuration.nix";
-  environment.shells = [
-    pkgs.zsh pkgs.fish
-  ];
   environment.systemPackages = [
     pkgs.coreutils
     pkgs.curl
@@ -28,7 +25,8 @@
     pkgs.which
   ];
 
-  # Create /etc/bashrc that loads the nix-darwin environment.
+  # Shells
+  environment.shells = [ pkgs.zsh pkgs.fish ];
   programs.zsh.enable = true;
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;

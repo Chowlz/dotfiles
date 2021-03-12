@@ -45,7 +45,6 @@ in {
   # Settings
   modules.fish = {
     enable = true;
-    package = pkgs.fish;
     plugins = [
       {# 02/18/2021
         name = "bass";
@@ -71,9 +70,6 @@ in {
       emacs = ''
         TERM=xterm-24bits command emacs -nw "$@"
       '';
-      env-vars = ''
-        printenv | sort | bat --pager cat -pl ini
-      '';
       npm = ''
         switch $argv[1]
           case packages
@@ -81,9 +77,6 @@ in {
           case '*'
             command npm $argv
         end
-      '';
-      paths = ''
-        for path in $PATH; echo $path; end
       '';
     };
     aliases = {
@@ -104,8 +97,6 @@ in {
     };
   };
   modules.nodejs.enable = true;
-  modules.nodejs.package = pkgs.nodejs;
   modules.terminfo.enable = true;
   modules.tmux.enable = true;
-  modules.tmux.package= pkgs.tmux;
 }
