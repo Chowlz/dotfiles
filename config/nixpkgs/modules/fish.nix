@@ -161,6 +161,11 @@ let
       ((optionalString
         (header != null)
         "# ${header}\n") + "if ${cond}\n" + str + "end\n");
+
+  babelfish = path: name:
+    pkgs.runCommand "${name}.fish" {
+      nativeBuildInputs = [ pkgs.babelfish ];
+    } "${pkgs.babelfish}/bin/babelfish < ${path} > $out;";
 in {
   options.modules.fish = {
     enable = mkEnableOption "fish, the friendly interactive shell";
@@ -323,10 +328,19 @@ in {
           in map generateCompletions (sort cmp config.home.packages);
       };
 
-      xdg.configFile."fish/config.fish".text = ''
-        ################################################################################
-        # config.fish
-        ################################################################################
+      xdg.configFile."fish/config.fish".text =
+        let
+          nix = babelfish "${pkgs.nix}/etc/profile.d/nix.sh" "nix";
+        in ''
+          ################################################################################
+          # config.fish
+          ################################################################################
+
+          # Setup nix env vars
+          if test -e ${nix}
+            source ${nix}
+          end
+          set -gx NIX_PAGE cat
 
         '' +
         ifStrBlock {
