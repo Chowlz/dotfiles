@@ -4,7 +4,7 @@ let
   stdenv = pkgs.stdenv;
 in {
   home.username = "ccruz";
-  home.homeDirectory = if stdenv.isDarwin then "/home/ccruz" else "/Users/ccruz";
+  home.homeDirectory = if stdenv.isDarwin then "/Users/ccruz" else "/home/ccruz";
   home.stateVersion = "21.03";
   home.packages = [
     pkgs.awscli
