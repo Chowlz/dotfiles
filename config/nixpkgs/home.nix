@@ -28,26 +28,6 @@ in {
     pkgs.ripgrep
     pkgs.rlwrap
     pkgs.shellcheck
-  ] ++ lib.optionals stdenv.isDarwin [
-    pkgs.coreutils
-    pkgs.curl
-    pkgs.diffutils
-    pkgs.findutils
-    pkgs.gawk
-    pkgs.git
-    pkgs.gnugrep
-    pkgs.gnused
-    pkgs.gnutar
-    pkgs.gzip
-    pkgs.ispell
-    pkgs.keychain
-    pkgs.lzma
-    pkgs.mosh
-    pkgs.openssh
-    pkgs.tmux
-    pkgs.wget
-    pkgs.which
-    pkgs.zsh
     pkgs.zsh-powerlevel10k
   ];
 
