@@ -5,9 +5,9 @@ My personal dotfiles
 ```
 # Install nix package manager
 
-# Add channels for home-manager and explicit alias to nixpkgs-unstable
+# Add channels for home-manager and replace nixpkgs alias from nixpkgs-unstable to nixos-unstable
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-nix-channel --add https://nixos.org/channels/nixos-unstable nixpkgs-unstable
+nix-channel --add https://nixos.org/channels/nixos-unstable nixpkgs
 nix-channel --update
 
 # Install home-manager
