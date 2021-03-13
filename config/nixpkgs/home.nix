@@ -34,6 +34,7 @@ in {
   programs.home-manager.enable = true;
 
   imports = [
+    ./modules/bash.nix
     ./modules/fish.nix
     ./modules/nodejs.nix
     ./modules/terminfo.nix
@@ -43,6 +44,7 @@ in {
   ];
 
   # Settings
+  modules.bash.enable = true;
   modules.fish = {
     enable = true;
     plugins = [
