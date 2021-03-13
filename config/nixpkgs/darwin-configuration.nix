@@ -11,6 +11,7 @@ in {
     pkgs.curl
     pkgs.diffutils
     pkgs.findutils
+    pkgs.emacsMacport
     pkgs.gawk
     pkgs.git
     pkgs.gnugrep
