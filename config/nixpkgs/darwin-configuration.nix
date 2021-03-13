@@ -32,6 +32,12 @@ in {
     "$HOME/.nix-defexpr/channels"
   ];
 
+  # Fonts
+  fonts = {
+    enableFontDir = true;
+    fonts = [ pkgs.nerdfonts ];
+  };
+
   # Shells
   environment.shells = [ pkgs.bash pkgs.zsh pkgs.fish ];
   programs.bash.enable = true;
