@@ -2,7 +2,7 @@
 
 set -eu
 
-cd $HOME
+cd "$HOME"
 
 # Nix
 nix-channel --update
@@ -17,9 +17,9 @@ setup-emacs () {
 }
 
 echo "Setting up doom-emacs .emacs.d"
-if [[ -L ~/.emacs.d && -d ~/.emacs.d ]]; then
+if [ -L "$HOME/.emacs.d" ] && [ -d "$HOME/.emacs.d" ]; then
   while true; do
-      read -p ".emacs.d detected - skip? (yes/no)" yn
+    read -pr ".emacs.d detected - skip? (yes/no)" yn
       case $yn in
           [Yy]es) setup-emacs ;;
           [Nn]o)  echo "Skipping" && break ;;
@@ -32,5 +32,5 @@ fi
 
 # Nodejs deps
 # setup-npm () {
-#   npm install -g clj-kondo es-lint shadow-cljs source-map-support tslint typescript ws
+#   npm install -g es-lint shadow-cljs source-map-support tslint typescript ws
 # }
