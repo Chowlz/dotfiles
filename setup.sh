@@ -17,7 +17,7 @@ setup-emacs () {
 }
 
 echo "Setting up doom-emacs .emacs.d"
-if [ -L "$HOME/.emacs.d" ] && [ -d "$HOME/.emacs.d" ]; then
+if [ -L "$HOME/.emacs.d" ] || [ -d "$HOME/.emacs.d" ]; then
   while true; do
     read -pr ".emacs.d detected - skip? (yes/no)" yn
       case $yn in
