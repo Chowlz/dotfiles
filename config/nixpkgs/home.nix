@@ -30,6 +30,10 @@ in {
     pkgs.shellcheck
     pkgs.zsh-powerlevel10k
   ];
+  home.sessionVariables = {
+    LESSHISTFILE = "$HOME/.cache/lesshst";
+    NODE_REPL_HISTORY = "$HOME/.cache/node_repl_history";
+  };
 
   programs.home-manager.enable = true;
 
@@ -70,7 +74,7 @@ in {
         if test -z "$argv"; command rlwrap bb; else; command bb $argv; end
       '';
       emacs = ''
-        TERM=xterm-24bits command emacs -nw "$@"
+        TERM=xterm-24bits command emacs -nw $argv
       '';
       npm = ''
         switch $argv[1]
