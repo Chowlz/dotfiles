@@ -33,7 +33,8 @@ in {
   ];
 
   # Shells
-  environment.shells = [ pkgs.zsh pkgs.fish ];
+  environment.shells = [ pkgs.bash pkgs.zsh pkgs.fish ];
+  programs.bash.enable = true;
   programs.zsh.enable = true;
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;
