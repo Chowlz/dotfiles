@@ -38,11 +38,11 @@ in {
   programs.home-manager.enable = true;
 
   imports = [
-    ./modules/bash.nix
-    ./modules/fish.nix
-    ./modules/nodejs.nix
-    ./modules/terminfo.nix
-    ./modules/tmux.nix
+    ./modules/home-manager/bash.nix
+    ./modules/home-manager/fish.nix
+    ./modules/home-manager/nodejs.nix
+    ./modules/home-manager/terminfo.nix
+    ./modules/home-manager/tmux.nix
     ./programs/vim/vim.nix
     ./programs/zsh/zsh.nix
   ];
