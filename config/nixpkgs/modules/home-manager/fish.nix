@@ -441,7 +441,7 @@ in {
             body = if isAttrs def then def.body else def;
           in ''
             function ${name}${modifiers}
-              ${indentStrBlock { break = false; prefix = "  "; str = body; }}
+            ${indentStrBlock { break = false; prefix = "  "; str = body; }}
             end
           '';
         };
