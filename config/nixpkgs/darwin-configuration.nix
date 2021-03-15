@@ -2,8 +2,13 @@
 
 with lib;
 let
+  stable-pkgs = import <nixpkgs-stable> {};
   darwin-config = "$HOME/.config/nixpkgs/darwin-configuration.nix";
 in {
+  # Used for backwards compatibility, please read the changelog before changing.
+  # $ darwin-rebuild changelog
+  system.stateVersion = 4;
+
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix
   environment.darwinConfig = darwin-config;
@@ -20,12 +25,13 @@ in {
     pkgs.gnutar
     pkgs.gzip
     pkgs.ispell
+    stable-pkgs.jdk
     pkgs.keychain
     pkgs.lzma
     pkgs.mosh
     pkgs.openssh
     pkgs.tmux
-    pkgs.wget
+    stable-pkgs.wget
     pkgs.which
   ];
 
