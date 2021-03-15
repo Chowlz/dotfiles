@@ -8,6 +8,14 @@ My personal dotfiles
 # Add channels for home-manager and replace nixpkgs alias from nixpkgs-unstable to nixos-unstable
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --add https://nixos.org/channels/nixos-unstable nixpkgs
+
+# If using macOS:
+nix-channel --add https://nixos.org/channels/nixpkgs-20.09-darwin nixpkgs-stable
+
+# Otherwise:
+nix-channel --add https://nixos.org/channels/nixpkgs-20.09 nixpkgs-stable
+
+# Update channels
 nix-channel --update
 
 # Install home-manager
@@ -27,12 +35,13 @@ cd $DOTFILES_DIR
 git config user.email "mail@charlescruz.dev"
 ```
 
-## Setup base and bootstrap:
+## Bootstrap:
 ```
-ln -s $DOTFILES_DIR/tag-base/config/nixpkgs ~/.config/nixpkgs
-home-manager switch
-rm ~/.config/nixpkgs
-
+nix-env -iA nixpkgs.rcm
 RCRC=$DOTFILES_DIR/rcrc rcup
 $DOTFILES_DIR/tag-base/setup.sh
+nix-env -e rcm
+
+home-manager build
+home-manager switch
 ```
