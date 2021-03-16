@@ -37,11 +37,5 @@ git config user.email "mail@charlescruz.dev"
 
 ## Bootstrap:
 ```
-nix-env -iA nixpkgs.rcm
-RCRC=$DOTFILES_DIR/rcrc rcup
-$DOTFILES_DIR/tag-base/setup.sh
-nix-env -e rcm
-
-home-manager build
-home-manager switch
+~/.dotfiles/setup.sh
 ```
