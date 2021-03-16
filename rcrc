@@ -3,4 +3,4 @@
 # Charles Cruz
 ################################################################################
 EXCLUDES="README.md setup.sh"
-SYMLINK_DIRS="doom.d"
+SYMLINK_DIRS="doom.d config/nixpkgs/external"

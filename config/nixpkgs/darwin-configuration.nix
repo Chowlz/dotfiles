@@ -61,5 +61,6 @@ in {
 
   # Modules
   imports = [
+    ~/.config/nixpkgs/external
   ];
 }
