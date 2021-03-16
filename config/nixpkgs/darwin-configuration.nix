@@ -31,7 +31,7 @@ in {
     pkgs.mosh
     pkgs.openssh
     pkgs.tmux
-    stable-pkgs.wget
+    pkgs.wget
     pkgs.which
   ];
 
