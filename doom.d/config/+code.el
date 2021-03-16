@@ -7,6 +7,7 @@
 
 ;; Set modes on file extension
 (add-to-list 'auto-mode-alist '("\\.bb\\'" . clojure-mode))
+(add-to-list 'auto-mode-alist '("\\.adoc\\'" . adoc-mode))
 (add-to-list 'auto-mode-alist '("\\.asciidoc\\'" . adoc-mode))
 
 ;; Keybindings
