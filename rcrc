@@ -1,2 +1,6 @@
+################################################################################
+# .rcrc
+# Charles Cruz
+################################################################################
 EXCLUDES="README.md setup.sh"
-SYMLINK_DIRS="doom.d config/git config/nixpkgs"
+SYMLINK_DIRS="doom.d"
