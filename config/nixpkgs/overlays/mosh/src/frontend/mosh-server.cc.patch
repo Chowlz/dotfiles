@@ -1,0 +1,15 @@
+diff --git a/src/frontend/mosh-server.cc b/src/frontend/mosh-server.cc
+index e8a6cb7..fd1b7e4 100644
+--- a/src/frontend/mosh-server.cc
++++ b/src/frontend/mosh-server.cc
+@@ -363,6 +363,10 @@ int main( int argc, char *argv[] )
+     }
+   }
+ 
++#ifdef HAVE_UTEMPTER
++utempter_set_helper( "utempter" );
++#endif
++
+   try {
+     return run_server( desired_ip, desired_port, command_path, command_argv, colors, verbose, with_motd );
+   } catch ( const Network::NetworkException &e ) {

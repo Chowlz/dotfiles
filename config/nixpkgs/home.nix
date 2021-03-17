@@ -19,6 +19,7 @@ in {
     pkgs.diceware
     pkgs.exa
     pkgs.lastpass-cli
+    pkgs.mosh
     pkgs.neofetch
     pkgs.neovim
     pkgs.pastel
