@@ -62,7 +62,7 @@ install-emacs () {
 setup-emacs () {
   prompt "Setting up doom-emacs .emacs.d"
   if [ -L "$HOME/.emacs.d" ] || [ -d "$HOME/.emacs.d" ]; then
-    question ".emacs.d detected - skip?" install-emacs
+    question ".emacs.d detected - install?" install-emacs
   else
     install-emacs
   fi
