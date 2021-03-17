@@ -338,9 +338,9 @@ in {
           cond ="not set -q __fish_home_manager_vars_sourced";
           str =
             indentAttrsOfStrBlock {
-              prefix="  ";
-              func=(k: v: "set -gx ${k} ${escapeShellArg v}");
-              attrs=config.home.sessionVariables;
+              prefix = "  ";
+              func = k: v: "set -gx ${k} ${escapeShellArg v}";
+              attrs = config.home.sessionVariables;
             } +
             optionalString (config.home.sessionVariables != {}) "  set -g __fish_home_manager_vars_sourced 1\n";
         } +
@@ -353,19 +353,21 @@ in {
               prefix = "  ";
               str =
                 let
+                  bin = "${config.home.homeDirectory}/bin";
                   nix = babelfish "${pkgs.nix}/etc/profile.d/nix.sh" "nix";
                   nix-channels-path = "${config.home.homeDirectory}/.nix-defexpr/channels";
                   nix-root-channels-path = "/nix/var/nix/profiles/per-user/root/channels";
                 in ''
-                test -e ${nix-channels-path}
-                  and not contains -i ${nix-channels-path} $NIX_PATH &> /dev/null
-                  and source ${nix}
-                test ! -e ${nix-root-channels-path}
-                  and contains -i ${nix-root-channels-path} $NIX_PATH &> /dev/null
-                  and set -e NIX_PATH[(contains -i ${nix-root-channels-path} $NIX_PATH)]
-                  and set -gx NIX_PATH $NIX_PATH
-                set -gx NIX_PAGE cat
-              '';
+                  test -e ${nix-channels-path}
+                    and not contains -i ${nix-channels-path} $NIX_PATH &> /dev/null
+                    and source ${nix}
+                  test ! -e ${nix-root-channels-path}
+                    and contains -i ${nix-root-channels-path} $NIX_PATH &> /dev/null
+                    and set -e NIX_PATH[(contains -i ${nix-root-channels-path} $NIX_PATH)]
+                    and set -gx NIX_PATH $NIX_PATH
+                  set -gx PATH ${bin} $PATH
+                  set -gx NIX_PAGE cat
+                '';
             } +
             "  set -g __fish_general_config_sourced 1\n";
         } +
