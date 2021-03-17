@@ -49,6 +49,8 @@
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
 
+(package! paredit
+  :recipe (:host github :repo "emacsmirror/paredit"))
 (package! adoc-mode)
 (package! jsonnet-mode)
 (package! vimrc-mode)
