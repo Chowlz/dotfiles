@@ -46,11 +46,17 @@ setup-home-manager () {
 
 # Doom-Emacs
 install-emacs () {
-  rm -fr ~/.emacs.d
-  git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
-  ~/.emacs.d/bin/doom install
-  ~/.emacs.d/bin/doom sync
-  ~/.emacs.d/bin/doom build
+  if [ -L "$HOME/.emacs.d" ] || [ -d "$HOME/.emacs.d" ]; then
+    cd "$HOME/.emacs.d"
+    find . -name . -o -prune -exec rm -rf -- {} +
+    git clone --depth 1 https://github.com/hlissner/doom-emacs .
+    cd
+  else
+    git clone --depth 1 https://github.com/hlissner/doom-emacs "$HOME/.emacs.d"
+  fi
+  "$HOME/.emacs.d/bin/doom" install
+  "$HOME/.emacs.d/bin/doom" sync
+  "$HOME/.emacs.d/bin/doom" build
 }
 
 setup-emacs () {
