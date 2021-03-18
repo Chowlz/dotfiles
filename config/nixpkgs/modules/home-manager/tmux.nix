@@ -40,7 +40,7 @@ in {
     };
 
     escapeTime = mkOption {
-      default = 500;
+      default = 0;
       example = 0;
       type = types.ints.unsigned;
       description = ''
