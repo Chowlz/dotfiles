@@ -353,7 +353,7 @@ in {
               prefix = "  ";
               str =
                 let
-                  bin = "${config.home.homeDirectory}/bin";
+                  bin-path = "${config.home.homeDirectory}/bin";
                   nix = babelfish "${pkgs.nix}/etc/profile.d/nix.sh" "nix";
                   nix-channels-path = "${config.home.homeDirectory}/.nix-defexpr/channels";
                   nix-root-channels-path = "/nix/var/nix/profiles/per-user/root/channels";
@@ -365,7 +365,9 @@ in {
                     and contains -i ${nix-root-channels-path} $NIX_PATH &> /dev/null
                     and set -e NIX_PATH[(contains -i ${nix-root-channels-path} $NIX_PATH)]
                     and set -gx NIX_PATH $NIX_PATH
-                  set -gx PATH ${bin} $PATH
+                  test -e ${bin-path}
+                    and ! contains -i ${bin-path} $PATH &> /dev/null
+                    and set -gx PATH ${bin-path} $PATH
                   set -gx NIX_PAGE cat
                 '';
             } +
