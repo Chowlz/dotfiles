@@ -10,8 +10,8 @@ in {
     enable = mkEnableOption "tmux";
 
     package = mkOption {
-      type = types.package;
-      default = pkgs.tmux;
+      type = types.nullOr types.package;
+      default = null;
       defaultText = literalExample "pkgs.tmux";
       example = literalExample "pkgs.tmux";
       description = "The tmux package to install. May be used to change the version." ;
@@ -86,7 +86,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+    home.packages = if (cfg.package != null) then [ cfg.package ] else [ ];
     home.file.".config/tmux/tmux.conf".text = ''
       ################################################################################
       # tmux.conf
