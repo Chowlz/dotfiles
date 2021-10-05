@@ -18,7 +18,7 @@ in {
     };
 
     aggressiveResize = mkOption {
-      default = false;
+      default = true;
       type = types.bool;
       description = ''
         Resize the window to the size of the smallest session for which it is
@@ -113,6 +113,7 @@ in {
       set -g base-index ${toString cfg.baseIndex}
       setw -g pane-base-index ${toString cfg.baseIndex}
       setw -g aggressive-resize ${boolToStr cfg.aggressiveResize}
+      setw -g window-size "smallest"
       setw -g clock-mode-style ${if cfg.clock24 then "24" else "12"}
 
       # Command aliases
