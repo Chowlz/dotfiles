@@ -12,5 +12,12 @@ self: super: {
       ./mosh/scripts/mosh.pl.patch
       ./mosh/src/frontend/mosh-server.cc.patch
     ];
+
+    postPatch = ''
+      substituteInPlace scripts/mosh.pl \
+          --subst-var-by ssh "${super.openssh}/bin/ssh"
+      substituteInPlace scripts/mosh.pl \
+          --subst-var-by mosh-client "$out/bin/mosh-client"
+    '';
   });
 }
