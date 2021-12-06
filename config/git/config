@@ -21,6 +21,7 @@ ph = push
 co = checkout
 cob = checkout -b
 com = checkout master
+cp = cherry-pick
 ci = commit -v
 st = status
 fe = fetch
