@@ -1,9 +1,9 @@
-;;; moonlight-theme.el --- inspired by VS code's Moonlight -*- no-byte-compile: t; -*-
+;;; moonlight-theme.el --- inspired by VS code's Moonlight -*- lexical-binding: t; no-byte-compile: t; -*-
 (require 'doom-themes)
 
 ;;
 (defgroup moonlight-theme nil
-  "Options for doom-themes"
+  "Options for the custom `doom-moonlight` theme."
   :group 'doom-themes)
 
 (defcustom moonlight-padded-modeline doom-themes-padded-modeline
@@ -107,137 +107,25 @@ Can be an integer to determine the exact padding."
     (when moonlight-padded-modeline
       (if (integerp moonlight-padded-modeline) moonlight-padded-modeline 4))))
 
-  ;; --- base faces ------------------------
-  (((lazy-highlight &override) :background base4 :foreground fg :distant-foreground fg)
-
-   (evil-goggles-default-face :inherit 'region :background (doom-blend region bg 0.5))
-
-   (doom-modeline-buffer-file       :foreground base7)
-   (doom-modeline-icon-inactive     :foreground indigo)
-
-   (doom-modeline-evil-emacs-state    :inherit 'bold :foreground bg :background blue)
-   (doom-modeline-evil-normal-state   :inherit 'bold :foreground bg :background dark-cyan)
-   (doom-modeline-evil-insert-state   :inherit 'bold :foreground bg :background green)
-   (doom-modeline-evil-visual-state   :inherit 'bold :foreground bg :background yellow)
-   (doom-modeline-evil-replace-state  :inherit 'bold :foreground bg :background orange)
-   (doom-modeline-evil-motion-state   :inherit 'bold :foreground bg :background violet)
-   (doom-modeline-evil-operator-state :inherit 'bold :foreground bg :background teal)
-   (doom-modeline-evil-lisp-state     :inherit 'bold :foreground bg :background pink)
-   (doom-modeline-project-dir       :foreground light-teal)
-   (doom-modeline-buffer-path       :foreground blue)
-   (doom-modeline-buffer-modified :inherit 'bold :foreground yellow)
-   (doom-modeline-buffer-major-mode :inherit 'doom-modeline-buffer-path)
-
-   (hl-line :background line-highlight)
-
-   (mode-line
-    :background modeline-bg :foreground modeline-fg
-    :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg)))
-
-   (mode-line-inactive
-    :background modeline-bg-alt :foreground modeline-fg-alt
-    :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg-alt)))
-
-   (solaire-mode-line-face
-    :background modeline-bg :foreground modeline-fg
-    :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg)))
-   (solaire-mode-line-inactive-face
-    :background modeline-bg-alt :foreground modeline-fg-alt
-    :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg-alt)))
-
-   (tooltip :background base0 :foreground fg)
-
-   (fringe :background base2)
-
-   ((line-number &override) :foreground base5 :background (doom-darken bg 0.06))
-   ((line-number-current-line &override) :foreground fg :background line-highlight)
-   ((linum &inherit line-number))
-
-   (font-lock-string-face :foreground green :weight 'bold)
+  ;; Base theme face overrides
+  ((font-lock-string-face :foreground green :weight 'bold)
    (font-lock-keyword-face :foreground keywords)
    (font-lock-comment-face :foreground comments)
    (font-lock-doc-face :foreground doc-comments)
+   (fringe :background base2)
+   (hl-line :background line-highlight)
+   (lazy-highlight :background base4 :foreground fg)
+   ((line-number &override) :foreground base5 :background (doom-darken bg 0.06))
+   ((line-number-current-line &override) :foreground fg :background line-highlight)
+   ((linum &inherit line-number))
+   (mode-line
+    :background modeline-bg :foreground modeline-fg
+    :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg)))
+   (mode-line-inactive
+    :background modeline-bg-alt :foreground modeline-fg-alt
+    :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg-alt)))
+   (tooltip :background base0 :foreground fg)
 
-   ;; message
-   (message-header-name       :foreground green)
-   (message-header-subject    :foreground highlight :weight 'bold)
-   (message-header-to         :foreground highlight :weight 'bold)
-   (message-header-cc         :inherit 'message-header-to :foreground (doom-darken highlight 0.15))
-   (message-header-other      :foreground violet)
-   (message-header-newsgroups :foreground yellow)
-   (message-header-xheader    :foreground doc-comments)
-   (message-separator         :foreground comments)
-   (message-mml               :foreground comments :slant 'italic)
-   (message-cited-text        :foreground magenta)
-
-   ;; --- major-mode faces ------------------------
-   ;; helm
-   (helm-ff-dotted-directory :foreground blue :weight 'bold)
-   (helm-ff-directory        :foreground light-cyan :weight 'normal)
-   (helm-ff-executable       :foreground green :background bg :weight 'normal)
-   (helm-ff-prefix           :foreground bg :background yellow :weight 'normal)
-   (helm-ff-symlink          :foreground yellow :background bg :weight 'normal)
-   (helm-ff-invalid-symlink  :foreground red :background bg :weight 'bold)
-   (helm-ff-file             :foreground fg :background bg :weight 'normal)
-   (helm-ff-file-extension   :foreground light-blue :background bg :weight 'normal)
-
-   ;; helm-rg
-   (helm-rg-base-rg-cmd-face                    :foreground fg      :weight 'normal)
-   (helm-rg-extra-arg-face                      :foreground light-cyan    :weight 'normal)
-   (helm-rg-active-arg-face                     :foreground green   :weight 'normal)
-   (helm-rg-inactive-arg-face                   :foreground fg      :weight 'normal)
-   (helm-rg-error-message                       :foreground red     :weight 'bold)
-   (helm-rg-directory-header-face               :foreground blue    :weight 'bold)
-   (helm-rg-file-match-face                     :foreground blue    :weight 'bold)
-   (helm-rg-title-face                          :foreground magenta :weight 'bold)
-   (helm-rg-colon-separator-ripgrep-output-face :foreground indigo  :weight 'bold)
-   (helm-rg-line-number-match-face              :foreground indigo  :weight 'bold)
-
-   ;; css-mode / scss-mode
-   (css-proprietary-property :foreground orange)
-   (css-property             :foreground green)
-   (css-selector             :foreground blue)
-
-   ;; nix-mode
-   (nix-attribute-face :foreground blue)
-   (nix-builtin-face :foreground dark-teal)
-
-   ;; man-mode
-   (Man-overstrike :inherit 'bold :foreground magenta)
-   (Man-underline :inherit 'underline :foreground blue)
-
-   ;; lsp-mode
-   (lsp-face-highlight-read :background region)
-   (lsp-face-highlight-textual :background region)
-   (lsp-face-highlight-write :background region)
-   (lsp-face-semhl-type-primative :foreground orange)
-   (lsp-face-semhl-method :foreground magenta)
-
-   ;; js2-mode
-   (js2-jsdoc-tag              :foreground magenta)
-   (js2-object-property        :foreground dark-teal)
-   (js2-object-property-access :foreground fg-alt)
-   (js2-function-param         :foreground pink)
-   (js2-jsdoc-type             :foreground base8)
-   (js2-jsdoc-value            :foreground light-cyan)
-
-   ;; org-mode
-   ((outline-1 &override) :foreground light-blue)
-   ((outline-2 &override) :foreground dark-cyan)
-   ((outline-3 &override) :foreground light-red)
-   ((outline-4 &override) :foreground blue)
-   ((outline-5 &override) :foreground magenta)
-   ((outline-6 &override) :foreground red)
-   ((outline-7 &override) :foreground violet)
-   ((org-block &override) :background base2)
-   ((org-block-background &override) :background base2)
-   ((org-block-begin-line &override) :background base2)
-
-   ;; rjsx-mode
-   (rjsx-tag :foreground violet)
-   (rjsx-attr :foreground yellow :slant 'italic :weight 'medium)
-
-   ;; --- plugin faces -------------------
    ;; all-the-icons
    (all-the-icons-red        :foreground red)
    (all-the-icons-red-alt    :foreground red)
@@ -290,9 +178,10 @@ Can be an integer to determine the exact padding."
    ;; company-box
    (company-box-annotation :foreground base7)
 
-   ;; doom-dashboard
-   (doom-dashboard-menu-desc :foreground dark-cyan)
-   (doom-dashboard-menu-tile :foreground dark-teal)
+   ;; css-mode / scss-mode
+   (css-proprietary-property :foreground orange)
+   (css-property             :foreground green)
+   (css-selector             :foreground blue)
 
    ;; diredfl
    (diredfl-date-time    :foreground blue)
@@ -312,6 +201,68 @@ Can be an integer to determine the exact padding."
    ;; diff
    (diff-refine-added :background (doom-lighten green-region 0.1) :inverse nil)
    (diff-refine-removed :background (doom-lighten red-region 0.1) :inverse nil)
+
+   ;; doom-emacs
+   (doom-dashboard-menu-desc :foreground dark-cyan)
+   (doom-dashboard-menu-tile :foreground dark-teal)
+   (doom-modeline-buffer-file       :foreground base7)
+   (doom-modeline-icon-inactive     :foreground indigo)
+   (doom-modeline-evil-emacs-state    :inherit 'bold :foreground bg :background blue)
+   (doom-modeline-evil-normal-state   :inherit 'bold :foreground bg :background dark-cyan)
+   (doom-modeline-evil-insert-state   :inherit 'bold :foreground bg :background green)
+   (doom-modeline-evil-visual-state   :inherit 'bold :foreground bg :background yellow)
+   (doom-modeline-evil-replace-state  :inherit 'bold :foreground bg :background orange)
+   (doom-modeline-evil-motion-state   :inherit 'bold :foreground bg :background violet)
+   (doom-modeline-evil-operator-state :inherit 'bold :foreground bg :background teal)
+   (doom-modeline-evil-lisp-state     :inherit 'bold :foreground bg :background pink)
+   (doom-modeline-project-dir       :foreground light-teal)
+   (doom-modeline-buffer-path       :foreground blue)
+   (doom-modeline-buffer-modified :inherit 'bold :foreground yellow)
+   (doom-modeline-buffer-major-mode :inherit 'doom-modeline-buffer-path)
+
+   ;; evil
+   (evil-goggles-default-face :inherit 'region :background (doom-blend region bg 0.5))
+
+   ;; helm
+   (helm-ff-dotted-directory :foreground blue :weight 'bold)
+   (helm-ff-directory        :foreground light-cyan :weight 'normal)
+   (helm-ff-executable       :foreground green :background bg :weight 'normal)
+   (helm-ff-prefix           :foreground bg :background yellow :weight 'normal)
+   (helm-ff-symlink          :foreground yellow :background bg :weight 'normal)
+   (helm-ff-invalid-symlink  :foreground red :background bg :weight 'bold)
+   (helm-ff-file             :foreground fg :background bg :weight 'normal)
+   (helm-ff-file-extension   :foreground light-blue :background bg :weight 'normal)
+
+   ;; helm-rg
+   (helm-rg-base-rg-cmd-face                    :foreground fg      :weight 'normal)
+   (helm-rg-extra-arg-face                      :foreground light-cyan    :weight 'normal)
+   (helm-rg-active-arg-face                     :foreground green   :weight 'normal)
+   (helm-rg-inactive-arg-face                   :foreground fg      :weight 'normal)
+   (helm-rg-error-message                       :foreground red     :weight 'bold)
+   (helm-rg-directory-header-face               :foreground blue    :weight 'bold)
+   (helm-rg-file-match-face                     :foreground blue    :weight 'bold)
+   (helm-rg-title-face                          :foreground magenta :weight 'bold)
+   (helm-rg-colon-separator-ripgrep-output-face :foreground indigo  :weight 'bold)
+   (helm-rg-line-number-match-face              :foreground indigo  :weight 'bold)
+
+   ;; ivy-posframe
+   (ivy-posframe :background base0)
+   (ivy-posframe-border :background base0)
+
+   ;; js2-mode
+   (js2-jsdoc-tag              :foreground magenta)
+   (js2-object-property        :foreground dark-teal)
+   (js2-object-property-access :foreground fg-alt)
+   (js2-function-param         :foreground pink)
+   (js2-jsdoc-type             :foreground base8)
+   (js2-jsdoc-value            :foreground light-cyan)
+
+   ;; lsp-mode
+   (lsp-face-highlight-read :background region)
+   (lsp-face-highlight-textual :background region)
+   (lsp-face-highlight-write :background region)
+   (lsp-face-semhl-type-primative :foreground orange)
+   (lsp-face-semhl-method :foreground magenta)
 
    ;; magit
    (magit-filename :foreground light-cyan)
@@ -347,11 +298,9 @@ Can be an integer to determine the exact padding."
    (magit-diff-added :foreground green :weight 'light)
    (magit-diff-removed :foreground red :weight 'light)
    (magit-diff-context :foreground fg :weight 'light)
-
    (magit-diff-added-highlight :foreground green :background green-region :weight 'bold)
    (magit-diff-removed-highlight :foreground red :background red-region :weight 'bold)
    (magit-diff-context-highlight :foreground fg :weight 'bold)
-
    (magit-diff-base :foreground fg :weight 'light)
    (magit-diff-base-highlight :foreground fg :weight 'bold)
    (magit-diff-lines-boundary :background fg :foreground base2)
@@ -377,6 +326,10 @@ Can be an integer to determine the exact padding."
    (magit-bisect-skip :foreground fg)
    (magit-dimmed :foreground base8)
 
+   ;; man <built-in>
+   (Man-overstrike :inherit 'bold :foreground magenta)
+   (Man-underline :inherit 'underline :foreground blue)
+
    ;; markdown-mode
    (markdown-header-face           :inherit 'bold :foreground yellow)
    (markdown-header-delimiter-face :inherit 'markdown-header-face)
@@ -385,19 +338,42 @@ Can be an integer to determine the exact padding."
    (markdown-url-face              :inherit 'underline :foreground orange)
    (markdown-gfm-checkbox-face     :foreground blue)
    (markdown-blockquote-face       :inherit 'italic :foreground fg)
+   (mmm-default-submode-face       :background base1)
+
+   ;; message <built-in>
+   (message-header-name       :foreground green)
+   (message-header-subject    :foreground highlight :weight 'bold)
+   (message-header-to         :foreground highlight :weight 'bold)
+   (message-header-cc         :inherit 'message-header-to :foreground (doom-darken highlight 0.15))
+   (message-header-other      :foreground violet)
+   (message-header-newsgroups :foreground yellow)
+   (message-header-xheader    :foreground doc-comments)
+   (message-separator         :foreground comments)
+   (message-mml               :foreground comments :slant 'italic)
+   (message-cited-text        :foreground magenta)
 
    ;; nav-flash
    (nav-flash-face :background region)
 
-   ;; ivy-posframe
-   (ivy-posframe :background base0)
-   (ivy-posframe-border :background base0)
+   ;; nix-mode
+   (nix-attribute-face :foreground blue)
+   (nix-builtin-face :foreground dark-teal)
+
+   ;; org <built-in>
+   ((outline-1 &override) :foreground light-blue)
+   ((outline-2 &override) :foreground dark-cyan)
+   ((outline-3 &override) :foreground light-red)
+   ((outline-4 &override) :foreground blue)
+   ((outline-5 &override) :foreground magenta)
+   ((outline-6 &override) :foreground red)
+   ((outline-7 &override) :foreground violet)
+   ((org-block &override) :background base2)
+   ((org-block-background &override) :background base2)
+   ((org-block-begin-line &override) :background base2)
 
    ;; popup
    (popup-face :inherit 'tooltip)
    (popup-selection-face :inherit 'tooltip)
-
-   ;; pos-tip
    (popup          :inherit 'tooltip)
    (popup-tip-face :inherit 'tooltip)
 
@@ -411,6 +387,10 @@ Can be an integer to determine the exact padding."
    (rainbow-delimiters-depth-7-face :foreground blue)
    (rainbow-delimiters-depth-8-face :foreground teal)
    (rainbow-delimiters-depth-9-face :foreground dark-cyan)
+
+   ;; rjsx-mode
+   (rjsx-tag :foreground violet)
+   (rjsx-attr :foreground yellow :slant 'italic :weight 'medium)
 
    ;; treemacs
    (treemacs-directory-face :foreground blue)
