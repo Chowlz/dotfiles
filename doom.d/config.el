@@ -33,6 +33,11 @@
   ;; Slow it down so I can press enter rather than selecting a suggestion
   (setq company-idle-delay 0.5))
 
+;; Misc. unbind
+(undefine-key! doom-leader-map
+  ;; Popup scratch buffer
+  "x")
+
 (load! "config/+asciidoc")
 (load! "config/+case-conversion")
 (load! "config/+clojure")
