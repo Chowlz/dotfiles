@@ -26,6 +26,7 @@ in {
     pkgs.gzip
     pkgs.ispell
     stable-pkgs.jdk
+    pkgs.jq
     pkgs.keychain
     pkgs.lzma
     pkgs.mosh
