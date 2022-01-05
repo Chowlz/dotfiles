@@ -5,7 +5,7 @@ let
 in {
   home.username = "ccruz";
   home.homeDirectory = if stdenv.isDarwin then "/Users/ccruz" else "/home/ccruz";
-  home.stateVersion = "21.03";
+  home.stateVersion = "22.05";
   home.packages = [
     pkgs.awscli
     pkgs.babashka
