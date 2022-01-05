@@ -98,6 +98,7 @@ in {
       mkex = "chmod u+x";
       nodejs = "node";
       t = "tmux";
+      tree = "exa --tree";
       untar = "tar -xzf";
       vim = "nvim";
       watch = "batwatch";
