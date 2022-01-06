@@ -13,6 +13,7 @@ in {
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix
   environment.darwinConfig = darwin-config;
   environment.systemPackages = [
+    pkgs.argocd
     pkgs.babashka
     pkgs.clojure
     pkgs.coreutils
@@ -30,6 +31,8 @@ in {
     stable-pkgs.jdk
     pkgs.jq
     pkgs.keychain
+    pkgs.kubectl
+    pkgs.kubernetes-helm
     pkgs.lzma
     pkgs.mosh
     pkgs.openssh
