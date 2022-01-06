@@ -8,14 +8,12 @@ in {
   home.stateVersion = "22.05";
   home.packages = [
     pkgs.awscli
-    pkgs.babashka
     pkgs.bat
     pkgs.bat-extras.batdiff
     pkgs.bat-extras.batgrep
     pkgs.bat-extras.batman
     pkgs.bat-extras.batwatch
     pkgs.clj-kondo
-    pkgs.clojure
     pkgs.diceware
     pkgs.exa
     pkgs.lastpass-cli
