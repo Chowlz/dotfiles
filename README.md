@@ -38,3 +38,10 @@ git config user.email "mail@charlescruz.dev"
 ```
 ~/.dotfiles/setup.sh
 ```
+
+## Fixing emacs on MacOs if version has changed:
+- Go to "Applications" in finder
+- Remove "Emacs.app"
+- Open "Emacs.app" in ~/Applications
+- Select "Options" > "Show in Finder" in the dock
+- Copy "Emacs.app" from the nix store folder into the Applications folder via drag-and-drop
