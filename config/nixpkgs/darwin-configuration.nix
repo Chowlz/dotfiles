@@ -13,6 +13,8 @@ in {
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix
   environment.darwinConfig = darwin-config;
   environment.systemPackages = [
+    pkgs.babashka
+    pkgs.clojure
     pkgs.coreutils
     pkgs.curl
     pkgs.diffutils
