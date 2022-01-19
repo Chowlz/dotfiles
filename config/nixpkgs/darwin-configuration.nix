@@ -34,6 +34,7 @@ in {
     pkgs.kubectl
     pkgs.kubernetes-helm
     pkgs.lzma
+    pkgs.minikube
     pkgs.mosh
     pkgs.openssh
     pkgs.tmux
