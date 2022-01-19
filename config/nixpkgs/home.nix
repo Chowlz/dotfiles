@@ -75,6 +75,29 @@ in {
       emacs = ''
         TERM=xterm-24bits command emacs -nw $argv
       '';
+      decode-jwt = {
+        description = "Decode a JWT";
+        body = ''
+          function decode_base64
+            set -l result $argv[1]
+            set -l len (math (string length $result) + 1)
+
+            if [ $len -eq 2 ]
+              set -l result "$1"'=='
+            else if [ $len -eq 3 ]
+              set -l result "$1"'='
+            end
+            echo "$result" | tr '_-' '/+' | base64 -d
+          end
+
+          echo "JWT Header:"
+          decode_base64 (echo -n $argv[1] | cut -d "." -f 1) | jq .
+          echo "JWT Body:"
+          decode_base64 (echo -n $argv[1] | cut -d "." -f 2) | \
+            jq "if .exp then (.expDate = (.exp|todate)) else . end"
+          functions -e decode_base64
+        '';
+      };
       npm = ''
         switch $argv[1]
           case packages
