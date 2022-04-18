@@ -27,7 +27,6 @@ in {
     pkgs.ripgrep
     pkgs.rlwrap
     pkgs.shellcheck
-    pkgs.zsh-powerlevel10k
   ];
   home.sessionVariables = {
     LESSHISTFILE = "$HOME/.cache/lesshst";

@@ -4,15 +4,6 @@
 ################################################################################
 
 ################################################################################
-# Powerlevel10k
-################################################################################
-source ~/.nix-profile/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-[[ ! -f ~/.config/zsh/p10k.zsh ]] || source ~/.config/zsh/p10k.zsh
-
-################################################################################
 # General config
 ################################################################################
 export HISTSIZE=100000      # History file size
@@ -135,7 +126,7 @@ case "$(uname -s)" in
 
   Darwin*)
     # Homebrew
-    add-to-path /usr/local/bin /usr/local/sbin
+    add-to-path /opt/homebrew/bin
     alias brewski="brew update && brew upgrade"
     ;;
 esac
