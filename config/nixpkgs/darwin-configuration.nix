@@ -2,12 +2,14 @@
 
 with lib;
 let
-  stable-pkgs = import <nixpkgs-stable> {};
   darwin-config = "$HOME/.config/nixpkgs/darwin-configuration.nix";
 in {
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
+
+  # Auto upgrade nix package and the daemon service.
+  services.nix-daemon.enable = true;
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix
@@ -20,7 +22,7 @@ in {
     pkgs.curl
     pkgs.diffutils
     pkgs.findutils
-    pkgs.emacsMacport
+  #  pkgs.emacsMacport
     pkgs.gawk
     pkgs.git
     pkgs.gnugrep
@@ -28,7 +30,8 @@ in {
     pkgs.gnutar
     pkgs.gzip
     pkgs.ispell
-    stable-pkgs.jdk
+    pkgs.iterm2
+    pkgs.jdk
     pkgs.jq
     pkgs.keychain
     pkgs.kubectl
