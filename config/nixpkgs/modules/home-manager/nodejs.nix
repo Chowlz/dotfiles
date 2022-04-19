@@ -9,7 +9,7 @@ in {
 
     package = mkOption {
       type = types.nullOr types.package;
-      default = null;
+      default = pkgs.nodejs;
       defaultText = literalExample "pkgs.nodejs";
       example = literalExample "pkgs.nodejs";
       description = "The nodejs package to install. May be used to change the version." ;
