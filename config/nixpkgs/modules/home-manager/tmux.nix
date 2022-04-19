@@ -102,6 +102,9 @@ in {
         # Prefix
         set -g prefix ${cfg.prefix}
         unbind C-b
+        # Allow moving to front of line with repeated presses
+        bind a send-prefix
+        bind C-a send-prefix
 
       '' +
       ''
