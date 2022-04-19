@@ -37,6 +37,7 @@ in {
     ./modules/home-manager/bash.nix
     ./modules/home-manager/fish.nix
     ./modules/home-manager/nodejs.nix
+    ./modules/home-manager/starship.nix
     ./modules/home-manager/terminfo.nix
     ./modules/home-manager/tmux.nix
     ./programs/vim/vim.nix
@@ -116,6 +117,7 @@ in {
     };
   };
   modules.nodejs.enable = true;
+  modules.starship.enable = true;
   modules.terminfo.enable = true;
   modules.tmux.enable = true;
 }

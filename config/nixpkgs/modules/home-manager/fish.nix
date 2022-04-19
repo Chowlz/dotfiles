@@ -372,6 +372,8 @@ in {
                   test -e ${bin-path}
                     and ! contains -i ${bin-path} $PATH &> /dev/null
                     and set -gx PATH ${bin-path} $PATH
+                  test (which starship 2> /dev/null)
+                    and starship init fish | source
                   set -gx NIX_PAGE cat
                 '';
             } +
