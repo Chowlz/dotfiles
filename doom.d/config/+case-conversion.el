@@ -5,16 +5,18 @@
  (:leader
   (:prefix ("-" . "case conversion")
    (:prefix ("f" . "flat")
-    :desc "Upper"                                  :n   "u"       #'case-conversion-upper
-    :desc "Lower"                                  :n   "l"       #'case-conversion-lower)
+    :desc "UPPERCASE"                              :n   "u"       #'case-conversion-upper
+    :desc "lowercase"                              :n   "l"       #'case-conversion-lower)
    (:prefix ("c" . "camel")
-    :desc "Camel"                                  :n   "c"       #'case-conversion-camel
-    :desc "Pascal"                                 :n   "p"       #'case-conversion-pascal)
+    :desc "camelCase"                              :n   "c"       #'case-conversion-camel
+    :desc "PascalCase"                             :n   "p"       #'case-conversion-pascal)
    (:prefix ("k" . "kebab")
-    :desc "Kebab"                                  :n   "k"       #'case-conversion-kebab
-    :desc "Train"                                  :n   "t"       #'case-conversion-train
-    :desc "Cobol"                                  :n   "c"       #'case-conversion-cobol)
+    :desc "kebab-case"                             :n   "k"       #'case-conversion-kebab
+    :desc "camel-Kebab-Case"                       :n   "c"       #'case-conversion-camel-kebab
+    :desc "Train-Case"                             :n   "t"       #'case-conversion-train
+    :desc "SCREAMING-KEBAB-CASE"                   :n   "S"       #'case-conversion-screaming-kebab)
    (:prefix ("s" . "snake")
-    :desc "Snake"                                  :n   "s"       #'case-conversion-snake
-    :desc "Camel snake"                            :n   "c"       #'case-conversion-camel-snake
-    :desc "Screaming snake"                        :n   "S"       #'case-conversion-screaming-snake))))
+    :desc "camel_Snake_Case"                       :n   "c"       #'case-conversion-camel-snake
+    :desc "Pascal_Snake_Case"                      :n   "p"       #'case-conversion-pascal-snake
+    :desc "snake_case"                             :n   "s"       #'case-conversion-snake
+    :desc "SCREAMING_SNAKE_CASE"                   :n   "S"       #'case-conversion-screaming-snake))))
