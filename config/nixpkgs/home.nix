@@ -53,15 +53,8 @@ in {
         src = pkgs.fetchFromGitHub {
           owner = "edc";
           repo = "bass";
-          rev = "d63054b24c2f63aaa3a08fb9ec9d0da4c70ab922";
-          sha256 = "0pwci5xxm8308nrb52s5nyxijk0svar8nqrdfvkk2y34z1cg319b";
-        };
-      }
-      { # 03/04/2021
-        name = "tide";
-        src = fetchTarball {
-          url = "https://codeload.github.com/IlanCosman/tide/tar.gz/v4.2.0";
-          sha256 = "039bzhz0ii5n2iyiw4vqxgf15m1bz51np4gy5f698wyfj2b03m83";
+          rev = "2fd3d2157d5271ca3575b13daec975ca4c10577a";
+          sha256 = "fl4/Pgtkojk5AE52wpGDnuLajQxHoVqyphE90IIPYFU=";
         };
       }
     ];
