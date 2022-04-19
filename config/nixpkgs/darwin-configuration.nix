@@ -39,6 +39,7 @@ in {
     pkgs.lzma
     pkgs.minikube
     pkgs.mosh
+    pkgs.nodejs
     pkgs.openssh
     pkgs.tmux
     pkgs.wget
