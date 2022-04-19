@@ -33,7 +33,8 @@ in {
       $nodejs\
       [](fg:#7A88CF bg:#33658A)\
       $time\
-      [ ](fg:#33658A)\
+      $status\
+      [](fg:#33658A)\
       """
 
       # Disable the blank line at the start of the prompt
@@ -89,6 +90,11 @@ in {
       time_format = "%R" # Hour:Minute Format
       style = "bg:#33658A"
       format = '[[ ♥ $time ](bg:#33658A)]($style)'
+
+      [status]
+      disabled = false
+      style = "bg:#33658A"
+      format = '[[ $symbol $common_meaning ](bg:#33658A)]($style)'
     '';
   };
 }
