@@ -1,26 +1,6 @@
 # dotfiles
 My personal dotfiles
 
-## Setup nix:
-```
-# Install nix package manager
-
-# Add channel for home-manager
-nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-
-# If using macOS:
-nix-channel --add https://nixos.org/channels/nixpkgs-20.09-darwin nixpkgs-stable
-
-# Otherwise:
-nix-channel --add https://nixos.org/channels/nixpkgs-20.09 nixpkgs-stable
-
-# Update channels
-nix-channel --update
-
-# Install home-manager
-nix-shell '<home-manager>' -A install
-```
-
 ## Clone the repo:
 ```
 # Change DOTFILES_DIR/create soft link (ln -s <dotfiles> ~/.dotfiles) if necessary
@@ -34,14 +14,49 @@ cd $DOTFILES_DIR
 git config user.email "mail@charlescruz.dev"
 ```
 
+## Setup homebrew (Mac only):
+Used to install the following
+- Rectangle
+- Spotify
+- Emacs 28.1
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+export PATH="/opt/homebrew/bin:$PATH"
+brew install --cask rectangle
+brew install --cask spotify
+brew tap railwaycat/emacsmacport
+brew install emacs-mac
+```
+
+## Setup nix darwin (Mac only):
+```
+curl -L https://nixos.org/nix/install | sh
+nix-build https://github.com/LnL7/nix-darwin/archive master.tar.gz -A installer
+./result/bin/darwin-installer
+
+# Check build
+darwin-rebuild build -I darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix
+
+# Confirm changes
+darwin-rebuild switch-I darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix
+
+# Remove old .nixpkgs
+rm -fr .nixpkgs
+```
+
+## Setup home-manager:
+```
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-shell '<home-manager>' -A install
+```
+
+## Link gui apps (Mac only):
+```
+ln -s /opt/homebrew/opt/emacs-mac/Emacs.app /Applications
+ln -s /run/current-system/Applications/iTerm2.app /Applications
+```
+
 ## Bootstrap:
 ```
 ~/.dotfiles/setup.sh
 ```
-
-## Fixing emacs on MacOs if version has changed:
-- Go to "Applications" in finder
-- Remove "Emacs.app"
-- Open "Emacs.app" in ~/Applications
-- Select "Options" > "Show in Finder" in the dock
-- Copy "Emacs.app" from the nix store folder into the Applications folder via drag-and-drop
