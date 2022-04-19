@@ -1,0 +1,6 @@
+# Prevents path_helper utility from /etc/profile, which can cause path problems
+# with tmux on macs
+if [ -f /etc/profile ]; then
+    PATH=""
+    source /etc/profile
+fi
