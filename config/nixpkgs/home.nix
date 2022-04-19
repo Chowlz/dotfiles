@@ -21,8 +21,6 @@ in {
     pkgs.neofetch
     pkgs.neovim
     pkgs.pastel
-    pkgs.python39
-    pkgs.python39Packages.pip
     pkgs.rcm
     pkgs.ripgrep
     pkgs.rlwrap
