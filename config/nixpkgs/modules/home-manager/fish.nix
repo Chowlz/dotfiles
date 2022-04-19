@@ -354,6 +354,7 @@ in {
               str =
                 let
                   bin-path = "${config.home.homeDirectory}/bin";
+                  homebrew-path = "/opt/homebrew/bin";
                   npm-path="${config.home.homeDirectory}/.local/share/npm/bin";
                   nix = babelfish "${pkgs.nix}/etc/profile.d/nix.sh" "nix";
                   nix-channels-path = "${config.home.homeDirectory}/.nix-defexpr/channels";
@@ -372,6 +373,9 @@ in {
                   test -e ${bin-path}
                     and ! contains -i ${bin-path} $PATH &> /dev/null
                     and set -gx PATH ${bin-path} $PATH
+                  test -e ${homebrew-path}
+                    and ! contains -i ${homebrew-path} $PATH &> /dev/null
+                    and set -gx PATH ${homebrew-path} $PATH
                   test (which starship 2> /dev/null)
                     and starship init fish | source
                   set -gx NIX_PAGE cat
