@@ -29,6 +29,7 @@ br = branch
 rb = rebase
 rbi = rebase -i
 rbu = rebase @{upstream}
+set-upstream = !sh -c 'git branch --set-upstream-to="$0"/"$1" "$(git rev-parse --abbrev-ref HEAD)"'
 undo-commit = !sh -c 'git reset --soft HEAD~"${1:-1}"'
 kill-commit = !sh -c 'git reset --hard HEAD~"${1:-1}"'
 unstage = reset HEAD --
