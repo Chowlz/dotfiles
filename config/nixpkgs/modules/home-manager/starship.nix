@@ -23,6 +23,7 @@ in {
       format = """
       [](#9A348E)\
       $username\
+      $hostname\
       [](bg:#DA627D fg:#9A348E)\
       $directory\
       [](fg:#DA627D bg:#FF995E)\
@@ -46,6 +47,11 @@ in {
       style_user = "bg:#9A348E"
       style_root = "bg:#9A348E"
       format = '[$user ]($style)'
+
+      [hostname]
+      ssh_only = true
+      style = "bg:#9A348E"
+      format = '[@ $hostname]($style)'
 
       [directory]
       style = "bg:#DA627D"
