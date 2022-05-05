@@ -19,7 +19,6 @@ in {
     pkgs.babashka
     pkgs.clojure
     pkgs.coreutils
-    pkgs.curl
     pkgs.diffutils
     pkgs.findutils
   #  pkgs.emacsMacport
