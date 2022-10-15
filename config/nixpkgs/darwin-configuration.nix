@@ -35,7 +35,7 @@ in {
     pkgs.keychain
     pkgs.kubectl
     pkgs.kubernetes-helm
-    pkgs.lzma
+    pkgs.xz
     pkgs.minikube
     pkgs.mosh
     pkgs.openssh
