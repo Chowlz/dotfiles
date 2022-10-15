@@ -40,6 +40,7 @@ in {
     pkgs.mosh
     pkgs.openssh
     pkgs.tmux
+    pkgs.unixtools.watch
     pkgs.wget
     pkgs.which
   ];
