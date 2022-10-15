@@ -30,7 +30,7 @@ in {
     pkgs.gzip
     pkgs.ispell
     pkgs.iterm2
-    pkgs.jdk
+    pkgs.jdk11
     pkgs.jq
     pkgs.keychain
     pkgs.kubectl
