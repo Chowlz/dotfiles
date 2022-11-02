@@ -3,6 +3,10 @@
 with lib;
 let
   darwin-config = "$HOME/.config/nixpkgs/darwin-configuration.nix";
+  clojure = pkgs.clojure.override {
+    # Set to open jdk 11
+    jdk = pkgs.openjdk11;
+  };
 in {
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -15,9 +19,9 @@ in {
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin-configuration.nix
   environment.darwinConfig = darwin-config;
   environment.systemPackages = [
+    clojure
     pkgs.argocd
     pkgs.babashka
-    pkgs.clojure
     pkgs.coreutils
     pkgs.diffutils
     pkgs.findutils
