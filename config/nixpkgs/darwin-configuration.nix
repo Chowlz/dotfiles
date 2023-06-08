@@ -31,6 +31,7 @@ in {
     pkgs.babashka
     pkgs.coreutils
     pkgs.clj-kondo
+    pkgs.diceware
     pkgs.diffutils
     pkgs.findutils
   #  pkgs.emacsMacport
@@ -44,16 +45,23 @@ in {
     pkgs.iterm2
     pkgs.jq
     pkgs.keychain
+    pkgs.kind
     pkgs.kubectl
     pkgs.kubernetes-helm
     pkgs.xz
+    pkgs.neofetch
     pkgs.mosh
     pkgs.nodejs
+    pkgs.nodePackages.aws-cdk
     pkgs.openssh
+    pkgs.python311Packages.cfn-lint
+    pkgs.ripgrep
+    pkgs.shellcheck
     pkgs.tmux
     pkgs.unixtools.watch
     pkgs.wget
     pkgs.which
+    pkgs.yq-go
   ];
 
   nix.nixPath = [

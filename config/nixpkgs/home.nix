@@ -12,17 +12,12 @@ in {
     pkgs.bat-extras.batgrep
     pkgs.bat-extras.batman
     pkgs.bat-extras.batwatch
-    pkgs.diceware
     pkgs.exa
-    pkgs.lastpass-cli
     pkgs.mosh
-    pkgs.neofetch
     pkgs.neovim
     pkgs.pastel
     pkgs.rcm
-    pkgs.ripgrep
     pkgs.rlwrap
-    pkgs.shellcheck
   ];
   home.sessionVariables = {
     LESSHISTFILE = "$HOME/.cache/lesshst";
