@@ -41,6 +41,7 @@ in {
     pkgs.argocd
     pkgs.babashka
     pkgs.coreutils
+    pkgs.clj-kondo
     pkgs.diffutils
     pkgs.findutils
   #  pkgs.emacsMacport

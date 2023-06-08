@@ -13,7 +13,6 @@ in {
     pkgs.bat-extras.batgrep
     pkgs.bat-extras.batman
     pkgs.bat-extras.batwatch
-    pkgs.clj-kondo
     pkgs.diceware
     pkgs.exa
     pkgs.lastpass-cli
