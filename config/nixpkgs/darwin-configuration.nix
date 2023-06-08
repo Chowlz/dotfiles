@@ -3,9 +3,13 @@
 with lib;
 let
   darwin-config = "$HOME/.config/nixpkgs/darwin-configuration.nix";
+  jdk11 = pkgs.jdk11;
   clojure = pkgs.clojure.override {
     # Set to open jdk 11
-    jdk = pkgs.openjdk11;
+    jdk = jdk11;
+  };
+  clojure-lsp = pkgs.clojure-lsp.override {
+    clojure = clojure;
   };
   minikube = let
     version = "1.29.0";
@@ -37,6 +41,8 @@ in {
   environment.darwinConfig = darwin-config;
   environment.systemPackages = [
     clojure
+    clojure-lsp
+    jdk11
     minikube
     pkgs.argocd
     pkgs.awscli2
@@ -54,7 +60,6 @@ in {
     pkgs.gzip
     pkgs.ispell
     pkgs.iterm2
-    pkgs.jdk11
     pkgs.jq
     pkgs.keychain
     pkgs.kubectl
