@@ -59,6 +59,7 @@ in {
     pkgs.kubernetes-helm
     pkgs.xz
     pkgs.mosh
+    pkgs.nodejs
     pkgs.openssh
     pkgs.tmux
     pkgs.unixtools.watch
