@@ -7,6 +7,23 @@ let
     # Set to open jdk 11
     jdk = pkgs.openjdk11;
   };
+  minikube = let
+    version = "1.29.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "kubernetes";
+      repo = "minikube";
+      rev = "v${version}";
+      sha256 = "sha256-rdcMgL7bzdlxrelui+V1APJik0v/4YyUqj9QlMRq1nI=";
+    };
+    in (pkgs.minikube.override rec {
+      buildGoModule = args: pkgs.buildGoModule.override {} (args // {
+        inherit src version;
+        buildPhase = ''
+          make COMMIT=${src.rev}
+        '';
+        vendorSha256 = "sha256-wRCSUDzz+1e4/ijwAnIM8a/AlnNNdVkiz3WO4Nhuy+M=";
+      });
+    });
 in {
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -20,6 +37,7 @@ in {
   environment.darwinConfig = darwin-config;
   environment.systemPackages = [
     clojure
+    minikube
     pkgs.argocd
     pkgs.babashka
     pkgs.coreutils
@@ -40,7 +58,6 @@ in {
     pkgs.kubectl
     pkgs.kubernetes-helm
     pkgs.xz
-    pkgs.minikube
     pkgs.mosh
     pkgs.openssh
     pkgs.tmux
