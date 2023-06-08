@@ -11,23 +11,6 @@ let
   clojure-lsp = pkgs.clojure-lsp.override {
     clojure = clojure;
   };
-  minikube = let
-    version = "1.29.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "kubernetes";
-      repo = "minikube";
-      rev = "v${version}";
-      sha256 = "sha256-rdcMgL7bzdlxrelui+V1APJik0v/4YyUqj9QlMRq1nI=";
-    };
-    in (pkgs.minikube.override rec {
-      buildGoModule = args: pkgs.buildGoModule.override {} (args // {
-        inherit src version;
-        buildPhase = ''
-          make COMMIT=${src.rev}
-        '';
-        vendorSha256 = "sha256-wRCSUDzz+1e4/ijwAnIM8a/AlnNNdVkiz3WO4Nhuy+M=";
-      });
-    });
 in {
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -43,7 +26,6 @@ in {
     clojure
     clojure-lsp
     jdk11
-    minikube
     pkgs.argocd
     pkgs.awscli2
     pkgs.babashka
