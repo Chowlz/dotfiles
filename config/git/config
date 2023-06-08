@@ -14,6 +14,8 @@ editor = vim
 default = upstream
 [pull]
 rebase = true
+[rebase]
+autoStash = true
 [alias]
 pl = pull
 plr = pull --rebase
