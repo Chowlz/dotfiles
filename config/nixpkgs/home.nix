@@ -7,7 +7,6 @@ in {
   home.homeDirectory = if stdenv.isDarwin then "/Users/ccruz" else "/home/ccruz";
   home.stateVersion = "22.05";
   home.packages = [
-    pkgs.awscli
     pkgs.bat
     pkgs.bat-extras.batdiff
     pkgs.bat-extras.batgrep

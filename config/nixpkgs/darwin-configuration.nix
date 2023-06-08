@@ -39,6 +39,7 @@ in {
     clojure
     minikube
     pkgs.argocd
+    pkgs.awscli2
     pkgs.babashka
     pkgs.coreutils
     pkgs.clj-kondo
