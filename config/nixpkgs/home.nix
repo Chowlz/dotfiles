@@ -5,7 +5,7 @@ let
 in {
   home.username = "ccruz";
   home.homeDirectory = if stdenv.isDarwin then "/Users/ccruz" else "/home/ccruz";
-  home.stateVersion = "22.05";
+  home.stateVersion = "23.11";
   home.packages = [
     pkgs.bat
     pkgs.bat-extras.batdiff
