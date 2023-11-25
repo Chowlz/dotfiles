@@ -134,30 +134,6 @@ setup-home-manager () {
   fi
 }
 
-# Doom-Emacs
-install-doom-emacs () {
-  if [ -L "$HOME/.emacs.d" ] || [ -d "$HOME/.emacs.d" ]; then
-    cd "$HOME/.emacs.d"
-    find . -name . -o -prune -exec rm -rf -- {} +
-    git clone --depth 1 https://github.com/hlissner/doom-emacs .
-    cd
-  else
-    git clone --depth 1 https://github.com/hlissner/doom-emacs "$HOME/.emacs.d"
-  fi
-  "$HOME/.emacs.d/bin/doom" install
-  "$HOME/.emacs.d/bin/doom" sync
-  "$HOME/.emacs.d/bin/doom" build
-}
-
-setup-doom-emacs () {
-  prompt "Setting up doom-emacs .emacs.d"
-  if [ -L "$HOME/.emacs.d" ] || [ -d "$HOME/.emacs.d" ]; then
-    question ".emacs.d detected - install?" install-doom-emacs
-  else
-    install-doom-emacs
-  fi
-}
-
 # Nodejs
 # shellcheck disable=SC2145
 setup-nodejs () {
@@ -178,7 +154,6 @@ setup-nix
 setup-dotfiles
 setup-nix-darwin
 setup-home-manager
-setup-doom-emacs
 setup-nodejs
 
 echo -e "\033[0;32mDone!\033[0m"

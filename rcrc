@@ -3,4 +3,4 @@
 # Charles Cruz
 ################################################################################
 EXCLUDES="README.md setup.sh result"
-SYMLINK_DIRS="doom.d config/nixpkgs/config config/nixpkgs/external config/nixpkgs/modules config/nixpkgs/overlays config/nixpkgs/programs"
+SYMLINK_DIRS="config/nixpkgs/config config/nixpkgs/external config/nixpkgs/modules config/nixpkgs/overlays config/nixpkgs/programs"
