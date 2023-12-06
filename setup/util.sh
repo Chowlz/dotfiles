@@ -39,7 +39,7 @@ question () {
 }
 
 setup-dotfiles () {
-  local rcrc_file 
+  local rcrc_file
   local dotfiles_dir
   rcrc_file="$1"
   dotfiles_dir=$(dirname "$rcrc_file")

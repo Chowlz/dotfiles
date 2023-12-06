@@ -89,7 +89,8 @@ in {
     home.packages = if (cfg.package != null) then [ cfg.package ] else [ ];
     home.file.".config/tmux/tmux.conf".text = ''
       ################################################################################
-      # tmux.conf
+      # ~/.config/tmux/tmux.conf
+      # Managed by nix
       ################################################################################
 
       '' +

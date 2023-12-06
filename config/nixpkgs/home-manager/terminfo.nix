@@ -6,9 +6,7 @@ let
 
   cfg = config.modules.terminfo;
 
-  tic = if stdenv.isDarwin
-          then "/usr/bin/tic"
-          else "${getBin ncurses}/bin/tic";
+  tic = if stdenv.isDarwin then "/usr/bin/tic" else "${getBin ncurses}/bin/tic";
 
   src = ''
     # Use colon separators.

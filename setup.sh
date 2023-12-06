@@ -18,14 +18,14 @@ case "$(uname -a)" in
     setup-nix-darwin "darwin"
     setup-homebrew
     ;;
-  Linux*WSL2*) 
+  Linux*WSL2*)
     source "$dir/setup/setup-nixos-wsl.sh"
     setup-dotfiles "$rcrc_file"
     setup-nixos "nixos-wsl"
     ;;
-  *) 
-    prompt-error "[ERROR] Could not bootstrap for OS" 
-    exit 1 
+  *)
+    prompt-error "[ERROR] Could not bootstrap for OS"
+    exit 1
     ;;
 esac
 
