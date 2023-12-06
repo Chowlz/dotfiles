@@ -2,5 +2,5 @@
 # .rcrc
 # Charles Cruz
 ################################################################################
-EXCLUDES="README.md setup.sh result"
-SYMLINK_DIRS="config/nixpkgs/config config/nixpkgs/external config/nixpkgs/modules config/nixpkgs/overlays config/nixpkgs/programs"
+EXCLUDES="README.md setup setup.sh result"
+SYMLINK_DIRS="config/nixpkgs"
