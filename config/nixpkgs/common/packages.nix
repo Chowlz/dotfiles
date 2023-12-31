@@ -22,6 +22,7 @@
     gnused
     gnutar
     gzip
+    inetutils
     ispell
     jdk
     jq
@@ -34,6 +35,7 @@
     nixpkgs-fmt
     nodejs
     nodePackages.aws-cdk
+    nodePackages.pnpm
     openssh
     pastel
     python311Packages.cfn-lint
