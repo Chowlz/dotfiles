@@ -2,6 +2,7 @@
 
 {
   networking.hostName = "nixos-wsl";
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   programs.fish.enable = true;
   programs.nix-ld.enable = true;
   services.vscode-server.enable = true;
