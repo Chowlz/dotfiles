@@ -34,6 +34,7 @@
         system = systems.x86_64-linux;
         modules = [
           ./hosts/nixos-wsl/configuration.nix
+          ./common/host.nix
           ./common/packages.nix
           ({ pkgs, ... }: { system.stateVersion = version; })
           home-manager.nixosModules.home-manager
