@@ -18,6 +18,7 @@
     findutils
     gawk
     git
+    git-lfs
     gnugrep
     gnused
     gnutar
