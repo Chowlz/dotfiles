@@ -2,6 +2,16 @@
 
 set -e
 
+help () {
+  echo "setup.sh - setup dotfiles"
+  echo " "
+  echo "setup.sh [options]"
+  echo " "
+  echo "options:"
+  echo "-h, --help                show brief help"
+  echo "-m, --home-manager-only   setup with only home-manager"
+}
+
 add-to-path () {
   while [ -n "$1" ]; do
     case ":$PATH:" in
