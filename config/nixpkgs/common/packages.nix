@@ -1,21 +1,25 @@
 { pkgs, ... }:
+
 {
-  environment.systemPackages = with pkgs; [
-    argocd
+  aws = with pkgs; [
     awscli2
+    nodePackages.aws-cdk
+    python311Packages.cfn-lint
+  ];
+  clojure = with pkgs; [
     babashka
+    clj-kondo
+    clojure
+    jdk
+    rlwrap
+  ];
+  common = with pkgs; [
     bat
     bat-extras.batdiff
     bat-extras.batgrep
     bat-extras.batman
     bat-extras.batwatch
-    clj-kondo
-    clojure
-    coreutils
-    diceware
-    diffutils
     eza
-    findutils
     gawk
     git
     git-lfs
@@ -23,26 +27,15 @@
     gnused
     gnutar
     gzip
-    inetutils
     ispell
-    jdk
     jq
     keychain
-    kind
-    kubectl
-    kubernetes-helm
-    neofetch
     neovim
     nixpkgs-fmt
     nodejs
-    nodePackages.aws-cdk
-    nodePackages.pnpm
-    openssh
     pastel
-    python311Packages.cfn-lint
     rcm
     ripgrep
-    rlwrap
     shellcheck
     tmux
     unixtools.watch
@@ -50,5 +43,19 @@
     which
     xz
     yq-go
+  ];
+  kubernetes = with pkgs; [
+    kind
+    kubectl
+    kubernetes-helm
+  ];
+  os = with pkgs; [
+    coreutils
+    diffutils
+    findutils
+    inetutils
+  ];
+  ssh = with pkgs; [
+    openssh
   ];
 }

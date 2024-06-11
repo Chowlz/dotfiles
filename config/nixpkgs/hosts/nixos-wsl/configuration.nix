@@ -1,23 +1,20 @@
 { lib, pkgs, inputs, ... }:
 
-{
+let
+  packages = import ../../common/packages.nix pkgs;
+in {
+  environment.systemPackages =
+    packages.aws ++
+    packages.clojure ++
+    packages.common ++
+    packages.kubernetes ++
+    packages.os ++
+    packages.ssh;
   environment.shellAliases = {
-    docker = " com.docker.cli.exe";
+    docker = "com.docker.cli.exe";
   };
   networking.hostName = "nixos-wsl";
-  programs.fish.enable = true;
-  programs.nix-ld.enable = true;
-  services.vscode-server.enable = true;
-  users.users.nixos.shell = pkgs.fish;
   wsl = {
-    enable = true;
-    defaultUser = "nixos";
     docker-desktop.enable = true;
-    extraBin = with pkgs; [
-      { src = "${coreutils}/bin/uname"; }
-      { src = "${coreutils}/bin/dirname"; }
-      { src = "${coreutils}/bin/readlink"; }
-    ];
-    wslConf.network.hostname = "wsl";
   };
 }

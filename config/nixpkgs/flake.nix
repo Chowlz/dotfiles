@@ -14,16 +14,18 @@
 
   outputs = { self, home-manager, nix-darwin, nixoswsl, nixpkgs, vscode-server, ... }@inputs:
   let
-    version = "24.05";
-    systems = {
-      aarch64-darwin = "aarch64-darwin";
-      x86_64-linux = "x86_64-linux";
+    system = {
+      version = "24.05";
+      arch = {
+        aarch64-darwin = "aarch64-darwin";
+        x86_64-linux = "x86_64-linux";
+      };
     };
   in {
     darwinConfigurations = {
       darwin = nix-darwin.lib.darwinSystem {
         inherit inputs;
-        system = systems.aarch64-darwin;
+        system = system.arch.aarch64-darwin;
         modules = [
           ./hosts/darwin/configuration.nix
         ];
@@ -31,12 +33,12 @@
     };
     nixosConfigurations = {
       nixos-wsl = nixpkgs.lib.nixosSystem {
-        system = systems.x86_64-linux;
+        system = system.arch.x86_64-linux;
         modules = [
-          ./hosts/nixos-wsl/configuration.nix
           ./common/host.nix
-          ./common/packages.nix
-          ({ pkgs, ... }: { system.stateVersion = version; })
+          ./common/nixos-wsl.nix
+          ./hosts/nixos-wsl/configuration.nix
+          ({ ... }: { system.stateVersion = system.version; })
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -46,7 +48,7 @@
               home = {
                 username = "nixos";
                 homeDirectory = "/home/nixos";
-                stateVersion = version;
+                stateVersion = system.version;
               };
               modules.git = {
                 user.email = "mail@charlescruz.dev";
