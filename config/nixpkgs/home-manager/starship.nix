@@ -3,6 +3,14 @@
 with lib;
 let
   cfg = config.modules.starship;
+  languages = [
+    { symbol = ""; name = "golang"; }
+    { symbol = "󱃾"; name = "helm"; }
+    { symbol = ""; name = "java"; }
+    { symbol = ""; name = "nodejs"; }
+    { symbol = ""; name = "python"; }
+    { symbol = ""; name = "rust"; }
+  ];
 in {
   options.modules.starship = {
     enable = mkEnableOption "starship";
@@ -26,43 +34,31 @@ in {
       ################################################################################
       command_timeout = 1000
       format = """
-      [](#9A348E)\
-      $username\
-      $hostname\
-      [](bg:#DA627D fg:#9A348E)\
+      [░▒▓](#a3aed2)\
+      $nix_shell\
+      [ $username$hostname ](fg:#090c0c bg:#a3aed2)\
+      [](fg:#a3aed2 bg:#769ff0)\
       $directory\
-      [](fg:#DA627D bg:#FCA17D)\
+      [](fg:#769ff0 bg:#394260)\
       $git_branch\
       $git_status\
-      [](fg:#FCA17D bg:#86BBD8)\
-      $c\
-      $elixir\
-      $elm\
-      $golang\
-      $gradle\
-      $haskell\
-      $java\
-      $julia\
-      $nodejs\
-      $nim\
-      $rust\
-      $scala\
-      [](fg:#86BBD8 bg:#06969A)\
-      $aws\
-      $docker_context\
-      $nix_shell\
-      [](fg:#06969A bg:#33658A)\
+      [](fg:#394260 bg:#212736)\
+      '' +
+      lib.strings.concatStrings (builtins.map (x: "$" + "${x.name}" + "\\\n") languages) +
+      ''
+      [](fg:#212736 bg:#1d2230)\
       $time\
-      [ ](fg:#33658A)\
+      [ ](fg:#1d2230)\
+      \n$character
       """
 
-      [aws]
-      symbol = ""
-      style = "bg:#06969A"
-      format = '[[ $symbol ($profile)(\($region\) )](bg:#06969A)]($style)'
+      [hostname]
+      ssh_only = true
+      style = "bold bg:#a3aed2"
+      format = '[@$hostname]($style)'
 
       [directory]
-      style = "bg:#DA627D"
+      style = "bold fg:#e3e5e5 bg:#769ff0"
       format = "[ $path ]($style)"
       truncation_length = 3
       truncation_symbol = "…/"
@@ -73,106 +69,55 @@ in {
       "Music" = " "
       "Pictures" = " "
 
-      [c]
-      symbol = " "
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [docker_context]
-      symbol = " "
-      style = "bg:#06969A"
-      format = '[ $symbol $context ]($style) $path'
-
-      [elixir]
-      symbol = " "
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [elm]
-      symbol = " "
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
       [git_branch]
       symbol = ""
-      style = "bg:#FCA17D"
-      format = '[ $symbol $branch ]($style)'
+      style = "bg:#394260"
+      format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
 
       [git_status]
-      style = "bg:#FCA17D"
-      format = '[$all_status$ahead_behind ]($style)'
-
-      [golang]
-      symbol = " "
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [gradle]
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [haskell]
-      symbol = " "
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [hostname]
-      ssh_only = true
-      style = "bg:#9A348E"
-      format = '[@ $hostname]($style)'
-
-      [java]
-      symbol = " "
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [julia]
-      symbol = " "
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [nim]
-      symbol = "󰆥 "
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [nix_shell]
-      symbol = "󱄅"
-      style = "bg:#06969A"
-      format = '[[ $symbol ($version) ](bg:#06969A)]($style)'
-
-      [nodejs]
-      symbol = ""
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [rust]
-      symbol = ""
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [scala]
-      symbol = " "
-      style = "bg:#86BBD8"
-      format = '[ $symbol ($version) ]($style)'
-
-      [status]
-      disabled = false
-      style = "bg:#33658A"
-      format = '[[ $symbol $common_meaning ](bg:#33658A)]($style)'
+      style = "bg:#394260"
+      format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
 
       [time]
       disabled = false
       time_format = "%R" # Hour:Minute Format
-      style = "bg:#33658A"
-      format = '[ ♥ $time ]($style)'
+      style = "bg:#1d2230"
+      format = '[[  $time ](bold fg:#a0a9cb bg:#1d2230)]($style)'
 
       [username]
       show_always = true
-      style_user = "bg:#9A348E"
-      style_root = "bg:#9A348E"
-      format = '[$user ]($style)'
+      style_user = "bold bg:#a3aed2"
+      style_root = "bold bg:#a3aed2"
+      format = '[$user]($style)'
       disabled = false
-    '';
+
+      # Languages
+      '' +
+      lib.strings.concatStrings (builtins.map (x:
+        ''
+
+        [${x.name}]
+        symbol = "${x.symbol}"
+        style = "bold bg:#212736"
+        format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+        ''
+        ) languages) +
+      ''
+
+      # Environments
+
+      [aws]
+      symbol = ""
+      style = "bold bg:#a3aed2"
+      format = '[ $symbol($profile )(\($region\) )]($style)'
+
+      [nix_shell]
+      symbol = "󱄅"
+      style = "bold bg:#a3aed2"
+      impure_msg = '[](bold bg:#a3aed2 fg:red)'
+      pure_msg = '[](bold bg:#a3aed2 fg:green)'
+      unknown_msg = '[](bold bg:#a3aed2 fg:yellow)'
+      format = '[ $symbol $state( \($name\))]($style)'
+      '';
   };
 }
