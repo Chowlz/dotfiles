@@ -19,6 +19,7 @@
     bat-extras.batgrep
     bat-extras.batman
     bat-extras.batwatch
+    dig
     eza
     gawk
     git
