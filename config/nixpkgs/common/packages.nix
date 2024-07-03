@@ -49,6 +49,7 @@
     kind
     kubectl
     kubernetes-helm
+    (pkgs.callPackage ../packages/rancher-hauler.nix { })
   ];
   os = with pkgs; [
     coreutils
