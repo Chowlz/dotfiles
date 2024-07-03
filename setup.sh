@@ -86,8 +86,10 @@ setup-nix-package-manager () {
 }
 
 setup-nix-conf () {
-  nix_conf=$HOME/.config/nix/nix.conf
+  nix_dir=$HOME/.config/nix
+  nix_conf=$nix_dir/nix.conf
   prompt "# Writing \"$nix_conf\" for flakes..."
+  mkdir -p "$nix_dir"
   echo "experimental-features = nix-command flakes" > "$nix_conf"
 }
 
