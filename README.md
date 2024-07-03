@@ -2,13 +2,25 @@
 
 My personal dotfiles, managed with nix flakes.
 
-## Nix-darwin
+## Configurations
+
+### Personal
+* nixos:
+  * `nixos-wsl`
+
+### Work (defined by `work-ref`)
+* nixos:
+  * `laptop`
+* home-manager:
+  * `ubuntu`
+
+## Setup
+
+### Nix-darwin
 
 Need to have a mac again to test ¯\_(ツ)_/¯
 
-## Nixos-wsl
-
-### Setup
+### NixOS-WSL
 
 1. Ensure 1Password beta is installed to use the 1Password SSH agent with WSL
 
@@ -18,21 +30,25 @@ Need to have a mac again to test ¯\_(ツ)_/¯
 
 ```
 sudo nix-channel --update
-nix-shell -p git --command \
-  "git -c core.sshCommand=ssh.exe clone git@github.com:Chowlz/dotfiles.git ~/.dotfiles"
-nix-shell -p git --command \
-  "cd ~/.dotfiles && git config user.email \"mail@charlescruz.dev\""
-nix-shell -p git --command \
-  "cd ~/.dotfiles && git config user.name \"Charles Cruz\""
-~/.dotfiles/setup.sh
 
+nix-shell -p git --command "git -c core.sshCommand=ssh.exe clone git@github.com:Chowlz/dotfiles.git ~/.dotfiles"
+
+nix-shell -p git --command "cd ~/.dotfiles && git config user.email \"mail@charlescruz.dev\""
+
+nix-shell -p git --command "cd ~/.dotfiles && git config user.name \"Charles Cruz\""
 ```
 
-4. In PowerShell: `wsl --terminate NixOS`
+4. Run the setup script:
 
-5. Enjoy!
+```
+~/.dotfiles/setup.sh --type nixos --configuration <configuration name>
+```
 
-### Updating
+5. In PowerShell: `wsl --terminate NixOS`
+
+6. Enjoy!
+
+#### Updating
 
 ```
 # From ~/.dotfiles/config/nixpkgs
@@ -45,9 +61,7 @@ Some changes may require a restart. In a powershell:
 wsl --terminate NixOS
 ```
 
-## Nixos-wsl for work
-
-### Setup
+### NixOS-WSL for work
 
 Most likely the VPN at work will require certificate installation updating things with the internet.
 
@@ -63,23 +77,18 @@ through the VPN (some VPNs mess up the routes for WSL).
 
 5. `sudo nixos-rebuild switch` and then restart wsl with `wsl --terminate NixOS`.
 
-6. As a regular user, follow the typical nix-shell commands, manually setup rcrc, and fill out
-configuration in `config/nixpkgs/work`. Use `config/nixpkgs/work-ref` as a reference.
+6. Create a work `work` directory to hold work-specific nix configuration. Use `work-ref` as a
+reference.
 
-7. Ensure certificates are in the configuration before doing
-`sudo nixos-rebuild switch --flake path:$(pwd)#laptop` or whatever the name of the configuration is.
+7. Afterwards, follow the above [instructions for setting up NixOS-WSL](#nixos-wsl).
 
-### Updating
+#### Updating
 
-Use `sudo nixos-rebuild switch --flake path:$(pwd)#laptop` or whatever the name of the
-configuration is.
+Use `sudo nixos-rebuild switch --flake path:$(pwd)#<configuration name>`.
 
-## Home-manager for work
+### Home-manager for work
 
-1. Run `./setup.sh --home-manager-only` to setup dotfiles only.
-
-2. Run `home-manager switch --flake path:$(pwd)#ubuntu` or whatever the name of the configuration
-is.
+Run `./setup.sh --type home-manager --configuration <configuration name>` to setup dotfiles only.
 
 ## Common Errors
 
