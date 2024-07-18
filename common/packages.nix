@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
 {
+  ansible = with pkgs; [
+    ansible
+    ansible-lint
+    python3
+  ];
   aws = with pkgs; [
     awscli2
     nodePackages.aws-cdk
