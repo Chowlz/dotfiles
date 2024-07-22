@@ -5,6 +5,8 @@
     ansible
     ansible-lint
     python3
+    python312Packages.pip
+    python312Packages.pyvmomi
   ];
   aws = with pkgs; [
     awscli2
