@@ -2,16 +2,15 @@
 
 {
   ansible = with pkgs; [
-    ansible
     ansible-lint
-    python3
-    python312Packages.pip
-    python312Packages.pyvmomi
+    (pkgs.python312.withPackages(ps: [
+      ps.ansible-core
+    ]))
   ];
   aws = with pkgs; [
     awscli2
     nodePackages.aws-cdk
-    python311Packages.cfn-lint
+    python312Packages.cfn-lint
   ];
   clojure = with pkgs; [
     babashka
