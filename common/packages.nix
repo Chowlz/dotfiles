@@ -47,6 +47,7 @@
     shellcheck
     tmux
     unixtools.watch
+    unzip
     wget
     which
     xz
