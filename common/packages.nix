@@ -41,6 +41,8 @@
     nixpkgs-fmt
     nodejs
     pastel
+    postgresql
+    process-compose
     rcm
     ripgrep
     shellcheck
