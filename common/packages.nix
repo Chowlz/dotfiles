@@ -55,7 +55,6 @@
     yq-go
   ];
   kubernetes = with pkgs; [
-    kind
     kubectl
     kubernetes-helm
   ];
