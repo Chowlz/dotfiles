@@ -3,8 +3,11 @@
 {
   ansible = with pkgs; [
     ansible-lint
+    check-jsonschema
+    jinja2-cli
     (pkgs.python312.withPackages(ps: [
       ps.ansible-core
+      ps.jmespath
     ]))
   ];
   aws = with pkgs; [
@@ -25,6 +28,7 @@
     bat-extras.batgrep
     bat-extras.batman
     bat-extras.batwatch
+    bats
     dig
     eza
     gawk
@@ -53,6 +57,7 @@
     which
     xz
     yq-go
+    zstd
   ];
   kubernetes = with pkgs; [
     kubectl
