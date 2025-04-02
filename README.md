@@ -16,48 +16,60 @@ My personal dotfiles, managed with nix flakes.
 
 ## Setup
 
+### Home-manager (for personal or work)
+
+1.  In the VM/linux machine, pull this repo, `cd` into it
+
+1.  (Work-only) Create a `work` directory to hold work-specific nix configuration. Use `work-ref` as
+    a reference.
+
+1.  At the project root directory, run:
+
+    ```bash
+    ./setup home-manager --configuration <configuration name>
+    ```
+
 ### Nix-darwin
 
 Need to have a mac again to test ¯\_(ツ)_/¯
 
 ### NixOS-WSL
 
-1. Ensure 1Password beta is installed to use the 1Password SSH agent with WSL
+1.  Ensure 1Password beta is installed to use the 1Password SSH agent with WSL
 
-2. In PowerShell: `wsl --import NixOS .\NixOS\ nixos-wsl.tar.gz --version 2`
+1.  In PowerShell, run:
 
-3. In NixOs:
+    ```powershell
+    wsl --import NixOS .\NixOS\ nixos-wsl.tar.gz --version 2
+    ```
 
-```
-sudo nix-channel --update
+1.  In NixOs, pull this repo, `cd` into it, and run:
 
-nix-shell -p git --command "git -c core.sshCommand=ssh.exe clone git@github.com:Chowlz/dotfiles.git ~/.dotfiles"
+    ```bash
+    sudo nix-channel --update
+    nix-shell -p git --command "git -c core.sshCommand=ssh.exe clone git@github.com:Chowlz/dotfiles.git ~/.dotfiles"
+    nix-shell -p git --command "cd ~/.dotfiles && git config user.email \"mail@charlescruz.dev\""
+    nix-shell -p git --command "cd ~/.dotfiles && git config user.name \"Charles Cruz\""
+    ./setup nixos --configuration <configuration name>
+    ```
 
-nix-shell -p git --command "cd ~/.dotfiles && git config user.email \"mail@charlescruz.dev\""
+1.  Shutdown NixOS and restart it in PowerShell, if desired:
 
-nix-shell -p git --command "cd ~/.dotfiles && git config user.name \"Charles Cruz\""
-```
-
-4. Run the setup script:
-
-```
-~/.dotfiles/setup.sh --type nixos --configuration <configuration name>
-```
-
-5. In PowerShell: `wsl --terminate NixOS`
-
-6. Enjoy!
+    ```powershell
+    wsl --terminate NixOS
+    # Optional
+    wsl -d NixOS
+    ```
 
 #### Updating
 
-```
-# From ~/.dotfiles/config/nixpkgs
-sudo nixos-rebuild switch --flake path:$(pwd)#nixos-wsl
+```bash
+./setup nixos --configuration <configuration name>
 ```
 
 Some changes may require a restart. In a powershell:
 
-```
+```bash
 wsl --terminate NixOS
 ```
 
@@ -65,42 +77,55 @@ wsl --terminate NixOS
 
 Most likely the VPN at work will require certificate installation updating things with the internet.
 
-1. Start NixOS in one window and start `wsl-vpnkit` as a wsl distro if needed to reach the internet
-through the VPN (some VPNs mess up the routes for WSL).
+1.  Start NixOS in one window and start `wsl-vpnkit` as a wsl distro if needed to reach the internet
+    through the VPN (some VPNs mess up the routes for WSL).
 
-2. Get root certificate into wsl.
+1.  Get corporate root certificates into wsl.
 
-3. `sudo -i` and `export NIX_SSL_CERT_FILE=/cert/file/location` in order to `nix-channel --update`.
+1.  In NixOS, run:
 
-4. Add certificates as text in an array into `security.pki.certificates` in
-`/etc/nixos/configuration.nix`.
+    ```bash
+    sudo -i
+    $ export NIX_SSL_CERT_FILE=/cert/file/location
+    $ nix-channel --update
+    ```
 
-5. `sudo nixos-rebuild switch` and then restart wsl with `wsl --terminate NixOS`.
+1.  Add certificates as text in an array into `security.pki.certificates` in
+    `/etc/nixos/configuration.nix`.
 
-6. Create a work `work` directory to hold work-specific nix configuration. Use `work-ref` as a
-reference.
+1.  In NixOS, run:
 
-7. Afterwards, follow the above [instructions for setting up NixOS-WSL](#nixos-wsl).
+    ```bash
+    sudo nixos-rebuild switch
+    ```
 
-#### Updating
+1.  Shutdown NixOS and restart it in PowerShell, if desired:
 
-Use `sudo nixos-rebuild switch --flake path:$(pwd)#<configuration name>`.
+    ```powershell
+    wsl --terminate NixOS
+    # Optional
+    wsl -d NixOS
+    ```
 
-### Home-manager for work
+1.  Create a `work` directory to hold work-specific nix configuration. Use `work-ref` as a
+    reference.
 
-Run `./setup.sh --type home-manager --configuration <configuration name>` to setup dotfiles only.
+1.  Afterwards, follow the above [instructions for setting up NixOS-WSL](#nixos-wsl) and updating
+    it when needed.
 
 ## Common Errors
 
 ### No such file or directory for new files
 
-`error: getting status of '/nix/store/*': No such file or directory`
+```bash
+error: getting status of '/nix/store/*': No such file or directory
+```
 
 `nixos-rebuild` requires new files/directories are staged/committed in git.
 
 ### Insufficient permission for adding an object to repository database .git/objects
 
-```
+```bash
 fatal: cannot create an empty blob in the object database
 error: program 'git' failed with exit code 128
 ```
@@ -108,4 +133,6 @@ error: program 'git' failed with exit code 128
 A file or folder was commited to git using elevated permissions and now git can't modify those
 objects. Recursively force ownership of all files under .git:
 
-`sudo chown -R $(whoami) ~/.dotfiles/.git/*`
+```bash
+sudo chown -R $(whoami) ~/.dotfiles/.git/*
+```

@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+declare scripts_dir root_dir script parent
+scripts_dir=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+root_dir=$(dirname "$scripts_dir")
+script=$(basename "$0")
+parent=$(basename "$1"); shift
+
+# shellcheck source=/dev/null
+source "$scripts_dir/lib.sh"
+# shellcheck source=/dev/null
+source "$scripts_dir/nix.sh"
+
+function nix-darwin:help () {
+  echo "$parent $script - setup nix-darwin"
+  echo ""
+  echo "$script [options]"
+  echo ""
+  echo "options:"
+  echo "  -h, --help                            show brief help"
+  echo "  -c, --configuration                   nix-darwin configuration"
+}
+
+function nix-darwin:switch () {
+  local root_dir=$1
+  local configuration=$2
+
+  # TODO: Update and test with flake
+  if ! which darwin-rebuild &> /dev/null; then
+    log INFO "Installing nix-darwin with configuration \"$configuration\""
+    # if [ ! -e "/etc/shells.bak" ]; then
+    #   echo "Moving /etc/shells to /etc/shells.bak"
+    #   sudo mv /etc/shells /etc/shells.bak
+    # fi
+    nix run nix-darwin -- switch --flake "path:$root_dir#$configuration"
+  else
+    log INFO "Updating nix-darwin with configuration \"$configuration\""
+    darwin-rebuild switch --flake "path:$root_dir#$configuration"
+  fi
+
+}
+
+function nix-darwin:create-app-links () {
+  if [ -e /run/current-system/Applications/iTerm2.app ]; then
+    log INFO "Creating link for iTerm2"
+    ln -s /run/current-system/Applications/iTerm2.app /Applications
+  fi
+}
+
+function nix-darwin:install-homebrew () {
+  if ! which brew &> /dev/null; then
+    log INFO "Installing homebrew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  else
+    log INFO "Homebrew detected - install skipped"
+  fi
+}
+
+function nix-darwin:install-homebrew-apps () {
+  log INFO "Installing homebrew apps"
+  brew install --cask recktangle
+  brew install --cask spotify
+}
+
+# Process args
+declare -A opts
+declare o
+declare -a unknown_args=()
+o=$(getopt --name "$parent $script" -o h,c: -l help,configuration: -- "$@")
+eval set -- "$o"
+while true; do
+  case "$1" in
+    -h|--help)
+      opts[help]=true
+      shift
+      ;;
+    -c|--configuration)
+      opts[configuration]=$2
+      shift 2
+      ;;
+    --)
+      shift
+      if [[ -n "$*" ]]; then
+        # shellcheck disable=SC2034
+        unknown_args=("$@")
+      fi
+      break
+      ;;
+    *)
+      log --minimal ERROR "Internal error in script \"$parent $script\""
+      exit 1
+      ;;
+  esac
+done
+
+# Arg validation
+_lib/opts:show-help nix-darwin:help "${opts[help]:-false}"
+_lib/opts:opts-ensure-configuration opts
+_lib/opts:validate-unknown-args "${unknown_args[@]}"
+
+# Setup Home Manager
+nix:install-nix-package-manager
+nix:gen-nix-conf
+nix-darwin:switch "$root_dir" "$configuration"
+nix-darwin:create-app-links
+nix-darwin:install-homebrew
+nix-darwin:install-homebrew-apps

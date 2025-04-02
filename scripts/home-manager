@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+declare scripts_dir root_dir script parent
+scripts_dir=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+root_dir=$(dirname "$scripts_dir")
+script=$(basename "$0")
+parent=$(basename "$1"); shift
+
+# shellcheck source=/dev/null
+source "$scripts_dir/lib.sh"
+# shellcheck source=/dev/null
+source "$scripts_dir/nix.sh"
+
+function home-manager:help () {
+  echo "$parent $script - setup Home Manager"
+  echo ""
+  echo "$script [options]"
+  echo ""
+  echo "options:"
+  echo "  -h, --help                            show brief help"
+  echo "  -c, --configuration                   Home Manager configuration"
+}
+
+function home-manager:install () {
+  if ! which nix-build &> /dev/null; then
+    log INFO "Installing home manager"
+    nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz \
+      home-manager
+  else
+    log WARN "Home manager detected - install skipped"
+  fi
+  nix-channel --update
+}
+
+function home-manager:switch () {
+  local root_dir=$1
+  local configuration=$2
+
+  log INFO "Updating home-manager with configuration \"$configuration\""
+  home-manager switch --flake "path:$root_dir/#$configuration"
+}
+
+# Process args
+declare -A opts
+declare o
+declare -a unknown_args=()
+o=$(getopt --name "$parent $script" -o h,c: -l help,configuration: -- "$@")
+eval set -- "$o"
+while true; do
+  case "$1" in
+    -h|--help)
+      opts[help]=true
+      shift
+      ;;
+    -c|--configuration)
+      opts[configuration]=$2
+      shift 2
+      ;;
+    --)
+      shift
+      if [[ -n "$*" ]]; then
+        # shellcheck disable=SC2034
+        unknown_args=("$@")
+      fi
+      break
+      ;;
+    *)
+      log --minimal ERROR "Internal error in script \"$parent $script\""
+      exit 1
+      ;;
+  esac
+done
+
+# Arg validation
+_lib/opts:show-help home-manager:help "${opts[help]:-false}"
+_lib/opts:opts-ensure-configuration opts
+_lib/opts:validate-unknown-args "${unknown_args[@]}"
+
+# Setup Home Manager
+nix:install-nix-package-manager
+nix:gen-nix-conf
+home-manager:install
+home-manager:switch "$root_dir" "$configuration"

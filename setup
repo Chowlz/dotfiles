@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+
+set -eu -o pipefail
+
+declare root_dir script
+root_dir=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+script=$(basename "$0")
+
+# shellcheck source=/dev/null
+source "$root_dir/scripts/lib.sh"
+# shellcheck source=/dev/null
+source "$root_dir/scripts/nix.sh"
+
+function help () {
+  echo "$script <type> [options]"
+  echo ""
+  echo "type:"
+  echo "  home-manager [options]                setup Home Manager"
+  echo "  nix-darwin [options]                  setup nix-darwin"
+  echo "  nixos [options]                       setup NixOS"
+  echo ""
+  echo "options:"
+  echo "  -h, --help                            show brief help"
+}
+
+function ensure-git () {
+  if ! which git; then
+    log --minimal ERROR "Setup requires git to be installed"
+    exit 1
+  fi
+}
+
+# Don't require -- after a command (i.e. <command> -h will show the help from <command> and not this
+# script, similar to invoking as <command> -- -h)
+declare -a o=()
+for oo in "$@"; do
+  shift
+  o+=("$oo")
+  # Stop at command (first non-opt parameter will be considered the command)
+  [[ "${oo:0:1}" != "-" ]] && break
+done
+
+# Process args
+declare -A opts
+declare oo type
+declare type_opts=("$@")
+oo=$(getopt --name "$script" -o h -l help -- "${o[@]}")
+eval set -- "$oo"
+while true; do
+  case "$1" in
+    -h|--help)
+      opts[help]=true
+      shift
+      ;;
+    --)
+      shift
+      if [[ -n "$*" ]]; then
+        type=$1
+      fi
+      break
+      ;;
+    *)
+      log --minimal ERROR "Internal error in script \"$script\"!"
+      exit 1
+      ;;
+  esac
+done
+
+# Arg validation
+_lib/opts:show-help help "${opts[help]:-false}"
+_lib/opts:validate-type "${type:-null}"
+ensure-git
+
+# Process type
+case "$type" in
+  home-manager|nix-darwin|nixos)
+    "$root_dir/scripts/$type" "$script" "${type_opts[@]}"
+    ;;
+  *)
+    log ERROR "Invalid type"
+    exit 1
+    ;;
+esac
+
+log INFO "Setup complete"
