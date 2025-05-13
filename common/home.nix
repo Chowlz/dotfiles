@@ -39,7 +39,6 @@ in
       tree = "eza --tree";
       untar = "tar -xzf";
       vim = "nvim";
-      watch = "batwatch";
     };
   };
 
