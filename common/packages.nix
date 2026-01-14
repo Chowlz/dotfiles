@@ -7,6 +7,7 @@
     jinja2-cli
     (pkgs.python312.withPackages(ps: [
       ps.ansible-core
+      ps.django
       ps.jmespath
     ]))
   ];
@@ -29,6 +30,7 @@
     bat-extras.batman
     bat-extras.batwatch
     bats
+    btop
     dig
     eza
     gawk
