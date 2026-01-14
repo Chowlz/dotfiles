@@ -107,14 +107,14 @@ in
   };
   programs.zsh = {
     enable = true;
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     history = {
       ignoreAllDups = true;
       ignorePatterns = [ "rm *" "pkill *" ];
       save = 100000;
       size = 100000;
     };
-    initExtra = ''
+    initContent = ''
       setopt HIST_SAVE_NO_DUPS    # Don't write duplicate entries in the history file
       setopt HIST_IGNORE_SPACE    # Ignore entries that start with a space
       setopt SH_WORD_SPLIT        # Bash-like variable expansion
