@@ -3,19 +3,19 @@
 
   inputs = {
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nixoswsl.inputs.nixpkgs.follows = "nixpkgs";
     nixoswsl.url = "github:nix-community/NixOS-WSL";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/8f1405cd5a9051fd310b09d5312b142ab3ea884b"; # nixos-25.05
     vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
   outputs = { self, home-manager, nix-darwin, nixoswsl, nixpkgs, vscode-server, ... }@inputs:
   let
     system = {
-      version = "24.11";
+      version = "25.05";
       arch = {
         aarch64-darwin = "aarch64-darwin";
         x86_64-linux = "x86_64-linux";
