@@ -1,19 +1,23 @@
 { config, pkgs, lib, ... }:
 
-with lib; {
+let
+  packages = import ../../common/packages.nix pkgs;
+in {
+  environment.systemPackages =
+    packages.clojure ++
+    packages.common ++
+    packages.kubernetes ++
+    packages.os ++
+    packages.ssh;
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
-  system.stateVersion = 4;
-
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-  nix.package = pkgs.nix;
+  system.stateVersion = 6;
 
   # Fonts
-  fonts = {
-    fontDir.enable = true;
-    fonts = [ pkgs.nerdfonts ];
-  };
+  fonts.packages = with pkgs; [
+    nerd-fonts.sauce-code-pro
+  ];
 
   # Shells
   environment.shells = [ pkgs.bash pkgs.zsh pkgs.fish ];
@@ -25,6 +29,6 @@ with lib; {
     babelfishPackage = pkgs.babelfish;
 
     # Fix PATH issues caused by macOS's /usr/libexec/path_helper
-    shellInit = "set -gx PATH ${concatStringsSep " " (splitString ":" config.environment.systemPath)}";
+    # shellInit = "set -gx PATH ${concatStringsSep " " (splitString ":" config.environment.systemPath)}";
   };
 }
