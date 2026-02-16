@@ -31,7 +31,13 @@ My personal dotfiles, managed with nix flakes.
 
 ### Nix-darwin
 
-Need to have a mac again to test ¯\_(ツ)_/¯
+1.  Install nix from determinate systems
+
+1.  In a terminal, run:
+
+    ```bash
+    ./setup nix-darwin
+    ```
 
 ### NixOS-WSL
 

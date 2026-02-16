@@ -2,6 +2,15 @@
 
 set -eu -o pipefail
 
+# Notes:
+# additional paths before nix-darwin:
+#   /System/Cryptexes/App/usr/bin
+#   /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin
+#   /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin
+#   /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+#   /opt/pmk/env/global/bin
+#   /Applications/iTerm.app/Contents/Resources/utilities
+
 declare scripts_dir root_dir script parent
 scripts_dir=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
 root_dir=$(dirname "$scripts_dir")
@@ -10,8 +19,6 @@ parent=$(basename "$1"); shift
 
 # shellcheck source=/dev/null
 source "$scripts_dir/lib.sh"
-# shellcheck source=/dev/null
-source "$scripts_dir/nix.sh"
 
 function nix-darwin:help () {
   echo "$parent $script - setup nix-darwin"
@@ -20,33 +27,27 @@ function nix-darwin:help () {
   echo ""
   echo "options:"
   echo "  -h, --help                            show brief help"
-  echo "  -c, --configuration                   nix-darwin configuration"
+}
+
+function nix-darwin:check-nix-install () {
+  if ! which nix &> /dev/null; then
+    log ERROR "Nix package manager undetected - for nix-darwin, intall determinate-systems nix"
+    exit 1
+  fi
+}
+
+function nix-darwin:backup-fish () {
+  if [[ ! -L ~/.config/fish/config.fish ]]; then
+    log info "Backing up fish config from non-nix config"
+    mv ~/.config/fish ~/.config/fish.backup
+  fi
 }
 
 function nix-darwin:switch () {
   local root_dir=$1
-  local configuration=$2
 
-  # TODO: Update and test with flake
-  if ! which darwin-rebuild &> /dev/null; then
-    log INFO "Installing nix-darwin with configuration \"$configuration\""
-    # if [ ! -e "/etc/shells.bak" ]; then
-    #   echo "Moving /etc/shells to /etc/shells.bak"
-    #   sudo mv /etc/shells /etc/shells.bak
-    # fi
-    nix run nix-darwin -- switch --flake "path:$root_dir#$configuration"
-  else
-    log INFO "Updating nix-darwin with configuration \"$configuration\""
-    darwin-rebuild switch --flake "path:$root_dir#$configuration"
-  fi
-
-}
-
-function nix-darwin:create-app-links () {
-  if [ -e /run/current-system/Applications/iTerm2.app ]; then
-    log INFO "Creating link for iTerm2"
-    ln -s /run/current-system/Applications/iTerm2.app /Applications
-  fi
+  cd "$root_dir"
+  nix develop --command nix-darwin-switch
 }
 
 function nix-darwin:install-homebrew () {
@@ -60,25 +61,24 @@ function nix-darwin:install-homebrew () {
 
 function nix-darwin:install-homebrew-apps () {
   log INFO "Installing homebrew apps"
-  brew install --cask recktangle
-  brew install --cask spotify
+  brew install --cask discord
+  brew install --cask iterm2
+  brew install --cask keymapp
+  brew install --cask notion
+  brew install --cask visual-studio-code
 }
 
 # Process args
 declare -A opts
 declare o
 declare -a unknown_args=()
-o=$(getopt --name "$parent $script" -o h,c: -l help,configuration: -- "$@")
+o=$(getopt --name "$parent $script" -o h -l help -- "$@")
 eval set -- "$o"
 while true; do
   case "$1" in
     -h|--help)
       opts[help]=true
       shift
-      ;;
-    -c|--configuration)
-      opts[configuration]=$2
-      shift 2
       ;;
     --)
       shift
@@ -97,13 +97,11 @@ done
 
 # Arg validation
 _lib/opts:show-help nix-darwin:help "${opts[help]:-false}"
-_lib/opts:opts-ensure-configuration opts
 _lib/opts:validate-unknown-args "${unknown_args[@]}"
 
 # Setup Home Manager
-nix:install-nix-package-manager
-nix:gen-nix-conf
-nix-darwin:switch "$root_dir" "$configuration"
-nix-darwin:create-app-links
+nix-darwin:check-nix-install
+nix-darwin:backup-fish
+nix-darwin:switch "$root_dir"
 nix-darwin:install-homebrew
 nix-darwin:install-homebrew-apps
