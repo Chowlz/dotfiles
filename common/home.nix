@@ -12,10 +12,8 @@ in
     ../home-manager/terminfo.nix
     ../home-manager/tmux.nix
   ];
-
   # Let home-manager manage itself
   programs.home-manager.enable = true;
-
   home = {
     sessionPath = [
       "$HOME/bin"
@@ -41,14 +39,12 @@ in
       vim = "nvim";
     };
   };
-
   modules.git.enable = true;
   modules.neovim.enable = true;
   modules.nodejs.enable = true;
   modules.starship.enable = true;
   modules.terminfo.enable = true;
   modules.tmux.enable = true;
-
   programs.bash = {
     enable = true;
     historyControl = [ "ignoredups" ];
