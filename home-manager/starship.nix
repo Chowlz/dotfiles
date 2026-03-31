@@ -8,7 +8,6 @@ let
     { symbol = "󱃾"; name = "helm"; }
     { symbol = ""; name = "java"; }
     { symbol = ""; name = "nodejs"; }
-    { symbol = ""; name = "python"; }
     { symbol = ""; name = "rust"; }
   ];
 in {
@@ -46,6 +45,7 @@ in {
       '' +
       lib.strings.concatStrings (builtins.map (x: "$" + "${x.name}" + "\\\n") languages) +
       ''
+      $python\
       [](fg:#212736 bg:#1d2230)\
       $time\
       [ ](fg:#1d2230)\
@@ -110,6 +110,14 @@ in {
       symbol = ""
       style = "bold bg:#a3aed2"
       format = '[ $symbol($profile )(\($region\) )]($style)'
+
+      [python]
+      symbol = ""
+      style = "bold bg:#212736"
+      # format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
+      format = '[[ $symbol ($version)(\($virtualenv\) )](fg:#769ff0 bg:#212736)]($style)'
+      # format = 'via [$symbol$pyenv_prefix($version )(\($virtualenv\) )]($style)'
+      pyenv_prefix = "venv"
 
       [nix_shell]
       symbol = "󱄅"
