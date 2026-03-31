@@ -1,8 +1,8 @@
-{ version, arch, home-manager, nix-darwin, nixoswsl, nixpkgs, vscode-server, ... }:
+{ system, inputs }:
 
 {
-  ubuntu = home-manager.lib.homeManagerConfiguration {
-    pkgs = import nixpkgs { system = arch.x86_64-linux; };
+  ubuntu = inputs.home-manager.lib.homeManagerConfiguration {
+    pkgs = import inputs.nixpkgs { system = system.arch.x86_64-linux; };
     modules = [
       ../common/home.nix
       ./hosts/ubuntu/home.nix
@@ -12,7 +12,7 @@
           username = "";
           # TODO
           homeDirectory = "";
-          stateVersion = "24.05";
+          stateVersion = system.version.stable;
         };
         modules.git = {
           # TODO

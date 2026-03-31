@@ -118,6 +118,6 @@
       then (import ./work/nixos.nix (system // inputs)) else { });
     homeConfigurations = { } //
     (if builtins.pathExists ./work/home-manager.nix
-      then (import ./work/home-manager.nix (system // inputs)) else { });
+      then (import ./work/home-manager.nix { inherit system inputs; }) else { });
   };
 }
