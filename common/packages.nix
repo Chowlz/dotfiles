@@ -24,7 +24,6 @@ with pkgs; {
       keychain
       neovim
       nixpkgs-fmt
-      openssh
       pastel
       postgresql
       ripgrep
@@ -42,7 +41,10 @@ with pkgs; {
       coreutils
       diffutils
       findutils
+    ];
+    net-utils = [
       inetutils
+      openssh
     ];
   };
   infra = {
