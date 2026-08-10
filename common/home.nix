@@ -53,6 +53,11 @@ in
   programs.bash = {
     enable = true;
     historyControl = [ "ignoredups" ];
+    profileExtra = ''
+      if [[ -f "$HOME/.profile.work" ]]; then
+        . "$HOME/.profile.work"
+      fi
+    '';
   };
   programs.fish = {
     enable = true;
