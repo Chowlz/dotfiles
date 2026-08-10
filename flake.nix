@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/2c3e5ec5df46d3aeee2a1da0bfedd74e21f4bf3a"; # nixos-25.11 (2026.01.13)
+    nixpkgs.url = "github:nixos/nixpkgs/445d861c6d31b4af0c79d8d4be2331f762a361d7"; # nixos-26.05 (2026.08.06)
     # Determinate Systems Nixpkgs
     determinate-nixpkgs.url = "https://flakehub.com/f/nixos/nixpkgs/0.1"; # Unstable
 
@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "determinate-nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixoswsl = {
@@ -37,8 +37,8 @@
   let
     system = {
       version = {
-        stable = "25.11";
-        unstable = "26.05";
+        stable = "26.05";
+        unstable = "26.11";
       };
       arch = {
         aarch64-darwin = "aarch64-darwin";
