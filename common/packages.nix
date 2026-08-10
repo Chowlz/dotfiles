@@ -24,16 +24,19 @@ with pkgs; {
       keychain
       neovim
       nixpkgs-fmt
+      nodejs
       pastel
       postgresql
       ripgrep
       shellcheck
+      sqlite
       tmux
       unixtools.watch
       unzip
       wget
       which
       xz
+      yarn-berry
       yq-go
       zstd
     ];
@@ -56,6 +59,7 @@ with pkgs; {
         ps.ansible-core
         ps.django
         ps.jmespath
+        ps.pip
       ]))
     ];
     aws = [
