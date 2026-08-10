@@ -12,6 +12,11 @@ in
     ../home-manager/terminfo.nix
     ../home-manager/tmux.nix
   ];
+  # Enable unfree packages
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = (_: true);
+  };
   # Let home-manager manage itself
   programs.home-manager.enable = true;
   home = {
