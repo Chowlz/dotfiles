@@ -31,5 +31,14 @@ pkgs.mkShellNoCC {
         echo "> darwin-rebuild switch was successful ✅"
       '';
     })
+    # For: nix develop --command nix-ds-upgrade
+    (writeShellApplication {
+      name = "nix-ds-upgrade";
+      text = ''
+        echo "> Running determinate-nixd upgrade switch as root. 🛠️.."
+        sudo determinate-nixd upgrade
+        echo "> determinate-nixd upgrade switch was successful ✅"
+      '';
+    })
   ];
 }
