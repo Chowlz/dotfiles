@@ -84,7 +84,10 @@ with pkgs; {
     ];
     homelab = [
       exiftool
+      imagemagick
+      immich-cli
       immich-go
+      iperf3
       rclone
     ];
     kubernetes = [
