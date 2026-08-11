@@ -50,6 +50,21 @@ with pkgs; {
       openssh
     ];
   };
+  dev = {
+    esp-idf = [
+      cmake
+      dfu-util
+      glib
+      libgcrypt
+      libslirp
+      pixman
+      # ❯ sudo ln -s /run/current-system/sw/bin/python3 /bin/python3
+      (pkgs.python313.withPackages(ps: [
+        ps.pip
+      ]))
+      SDL2
+    ];
+  };
   infra = {
     ansible = [
       ansible-lint

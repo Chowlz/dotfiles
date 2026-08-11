@@ -8,6 +8,7 @@ in {
     packages.base.common ++
     packages.base.gnu-utils ++
     packages.base.net-utils ++
+    packages.dev.esp-idf ++
     packages.infra.homelab ++
     packages.infra.kubernetes ++
     packages.languages.clojure ++
