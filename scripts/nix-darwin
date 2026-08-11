@@ -61,6 +61,8 @@ function nix-darwin:install-homebrew () {
 
 function nix-darwin:install-homebrew-apps () {
   log INFO "Installing homebrew apps"
+  # 2026.02.24 - Nix does not have an up-to-date version of getopt, but homebrew does
+  brew install gnu-getopt
   brew install --cask discord
   brew install --cask iterm2
   brew install --cask keymapp

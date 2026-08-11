@@ -74,6 +74,7 @@
                 sessionPath = [
                   "/opt/homebrew/bin"
                   "/opt/homebrew/sbin"
+                  "/opt/homebrew/opt/gnu-getopt/bin"
                 ];
                 stateVersion = system.version.unstable;
               };
