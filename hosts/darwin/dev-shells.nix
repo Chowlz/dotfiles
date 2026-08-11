@@ -13,7 +13,7 @@ pkgs.mkShellNoCC {
         inputs.nix-darwin.packages.${system.arch.aarch64-darwin}.darwin-rebuild
       ];
       text = ''
-        echo "> Running darwin-rebuild switch as root. 🛠️.."
+        echo "> Running darwin-rebuild build as root. 🛠️.."
         sudo darwin-rebuild build --flake "path:$(pwd)#darwin"
         echo "> darwin-rebuild build was successful ✅"
       '';
