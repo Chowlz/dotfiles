@@ -12,11 +12,6 @@ in
     ../home-manager/terminfo.nix
     ../home-manager/tmux.nix
   ];
-  # Enable unfree packages
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = (_: true);
-  };
   # Let home-manager manage itself
   programs.home-manager.enable = true;
   home = {
@@ -50,6 +45,12 @@ in
   modules.starship.enable = true;
   modules.terminfo.enable = true;
   modules.tmux.enable = true;
+  # Fix for `programs.man.generateCaches has no effect when programs.man.package is null` on
+  # nix-darwin when using programs.fish
+  # Ref:
+  #  https://github.com/nix-community/home-manager/pull/9272
+  #  https://nix-community.github.io/home-manager/options/home-manager/programs/man.html#opt-programs.man.generateCaches
+  programs.man.generateCaches = if (stdenv.isDarwin) then false else true;
   programs.bash = {
     enable = true;
     historyControl = [ "ignoredups" ];
